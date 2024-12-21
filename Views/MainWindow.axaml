@@ -23,13 +23,20 @@
         <Grid
             ColumnDefinitions="Auto,*">
         
-            <chess:Chessboard
-                Grid.Column="0"
-            
-                x:Name="MainChessboard"
-                Size="600"
-                HorizontalAlignment="Left"
-                Margin="50"/>
+            <Panel
+                Grid.Column="0">
+                
+                <chess:Chessboard
+                    x:Name="MainChessboard"
+                    Size="600"
+                    HorizontalAlignment="Left"
+                    Margin="50"/>
+                
+                <Canvas
+                    x:Name="OverlayCanvas">
+                </Canvas>
+                
+            </Panel>
         
             <Panel
                 Grid.Column="1"
@@ -38,11 +45,6 @@
         
             </Panel>
         </Grid>
-        
-        <Canvas
-            x:Name="OverlayCanvas">
-           
-        </Canvas>
         
     </Panel>
     
