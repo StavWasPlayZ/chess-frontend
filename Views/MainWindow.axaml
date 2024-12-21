@@ -8,6 +8,7 @@
         Width="1000" Height="700"
         x:Class="chess_frontend.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
+        CanResize="False"
         Icon="/Assets/avalonia-logo.ico"
         Title="chess_frontend"
         Background="#302e2b">
@@ -44,10 +45,10 @@
         
                 <TextBlock 
                     Text="Hi Mom"
-                    Width="100"
-                    Height="100"
                     FontSize="18"
                     Foreground="White"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
                     />
                 
             </Panel>
