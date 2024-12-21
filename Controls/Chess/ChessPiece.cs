@@ -3,8 +3,10 @@ using Avalonia.Controls;
 
 namespace chess_frontend.Controls.Chess;
 
-public class ChessPiece : Panel
+public class ChessPiece : Avalonia.Svg.Skia.Svg
 {
+    private static readonly Uri BaseUri = new("avares://chess_frontend/");
+    
     private readonly Chessboard _chessboard;
     public readonly Type PieceType;
     public readonly PlayerType PlayerType;
@@ -12,7 +14,8 @@ public class ChessPiece : Panel
     public int X { get; set; }
     public int Y { get; set; }
     
-    public ChessPiece(Chessboard chessboard, Type pieceType, PlayerType playerType, int x, int y)
+    public ChessPiece(Chessboard chessboard, Type pieceType, PlayerType playerType, int x, int y) :
+        base(BaseUri)
     {
         _chessboard = chessboard;
         PieceType = pieceType;
@@ -20,12 +23,9 @@ public class ChessPiece : Panel
         
         X = x;
         Y = y;
-        
-        Children.Add(new Avalonia.Svg.Skia.Svg(new Uri("avares://chess_frontend/"))
-        {
-            Path = "/Assets/pieces/"
-                   + $"{playerType.ToString().ToLower()}_{pieceType.ToString().ToLower()}.svg"
-        });
+
+        Path = "/Assets/pieces/"
+               + $"{playerType.ToString().ToLower()}_{pieceType.ToString().ToLower()}.svg";
     }
     
     
