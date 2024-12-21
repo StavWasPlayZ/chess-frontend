@@ -5,11 +5,13 @@ namespace chess_frontend.Controls.Chess;
 
 public class ChessPiece : Panel
 {
+    private readonly Chessboard _chessboard;
     public readonly Type PieceType;
     public readonly PlayerType PlayerType;
     
-    public ChessPiece(Type pieceType, PlayerType playerType)
+    public ChessPiece(Chessboard chessboard, Type pieceType, PlayerType playerType)
     {
+        _chessboard = chessboard;
         PieceType = pieceType;
         PlayerType = playerType;
         
@@ -19,6 +21,9 @@ public class ChessPiece : Panel
                    + $"{playerType.ToString().ToLower()}_{pieceType.ToString().ToLower()}.svg"
         });
     }
+    
+    
+    public Chessboard GetChessboard() => _chessboard;
     
     
     public enum Type

@@ -102,6 +102,7 @@ public class Chessboard : Grid
         }
                 
         _tiles[row, column].ChessPiece = new ChessPiece(
+            this,
             pieceType,
             (row < ChessboardSize / 2) ? PlayerType.Black : PlayerType.White
         );
