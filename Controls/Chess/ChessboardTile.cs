@@ -53,14 +53,23 @@ public class ChessboardTile : Panel
     }
     
     
+    private ChessPiece? _containedChessPiece;
+    
     public ChessPiece? ContainedChessPiece
     {
-        get => Children.Count == 0 ? null : (ChessPiece) Children[0];
+        get => _containedChessPiece;
         set
         {
             Children.Clear();
             if (value == null)
+            {
+                if (_containedChessPiece != null)
+                {
+                    Children.Remove(_containedChessPiece);
+                    _containedChessPiece = null;
+                }
                 return;
+            }
             
             Children.Add(value);
             value.ParentTile = this;
