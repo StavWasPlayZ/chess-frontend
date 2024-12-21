@@ -40,7 +40,7 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
     {
         // While this should really be a thing,
         // one of the backend checks is this.
-        // So we shan't.
+        // So we shan't. I guess.
         // if (PlayerType != GetChessboard().PlayerTurn)
         //     return;
         
