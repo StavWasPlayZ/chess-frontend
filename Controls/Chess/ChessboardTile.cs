@@ -5,14 +5,28 @@ namespace chess_frontend.Controls.Chess;
 
 public class ChessboardTile : Panel
 {
-    public readonly int row, column;
-    
+    public readonly int Row, Column;
+
+    public ChessPiece? ChessPiece
+    {
+        get => (ChessPiece?) Children[0];
+        set
+        {
+            Children.Clear();
+
+            if (value != null)
+            {
+                Children.Add(value);
+            }
+        }
+    }
+
     public ChessboardTile(Chessboard board, int row, int column)
     {
         Width = Height = board.Size / Chessboard.ChessboardSize;
         
-        this.row = row;
-        this.column = column;
+        Row = row;
+        Column = column;
         Grid.SetRow(this, row);
         Grid.SetColumn(this, column);
 

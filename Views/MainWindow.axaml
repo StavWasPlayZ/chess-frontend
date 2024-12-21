@@ -36,9 +36,6 @@
             Background="#262522"
             >
         
-        <!-- <Svg Path="avares://chess_frontend/Assets/pieces/black_bishop.svg"></Svg> -->
-        
-        
         </Panel>
     </Grid>
     
