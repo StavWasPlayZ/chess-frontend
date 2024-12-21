@@ -75,16 +75,28 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         
         int row = (int) dest.Y, column = (int) dest.X;
 
-        if (row < 0 || column < 0 || row >= Chessboard.ChessboardSize || column >= Chessboard.ChessboardSize)
-        {
-            ParentTile.Children.Add(this);
-        }
-        else
+        if (ValidateMove(row, column))
         {
             var newPrentTile = GetChessboard()[row, column];
             ParentTile = newPrentTile;
             newPrentTile.Children.Add(this);
         }
+        else
+        {
+            ParentTile.Children.Add(this);
+        }
+    }
+
+    private bool ValidateMove(int row, int column)
+    {
+        // While the backend does check for out-of-bounds behaviour,
+        // we won't actually be able to determine where it will be on the board.
+        if (row < 0 || column < 0 || row >= Chessboard.ChessboardSize || column >= Chessboard.ChessboardSize)
+            return false;
+        
+        //TODO backend call
+        
+        return true;
     }
 
     private void PositionToPointer(PointerEventArgs e)
