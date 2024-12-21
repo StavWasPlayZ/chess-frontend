@@ -23,14 +23,15 @@ public class Chessboard : Grid
         AttachedToVisualTree += (_, _) => InitializeChessboard();
     }
 
-    /**
-     * Constructs a Chessboard with no overlay canvas.
-     * This canvas MUST be later initialized.
-     */
+    /// Constructs a Chessboard with no overlay canvas.
+    /// <p><b>This canvas MUST later be initialized.</b></p>
     public Chessboard()
     {
         AttachedToVisualTree += (_, _) => InitializeChessboard();
     }
+    
+    
+    public ChessboardTile this[int row, int column] => _tiles[row, column];
     
 
     private void InitializeChessboard()

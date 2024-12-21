@@ -68,8 +68,23 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         
         Width = Height = Width - PressScaleAddition;
         
-        //TODO figure out where to place now
-        ParentTile.Children.Add(this);
+        //Figure out where to place now
+        var dest = e.GetPosition(GetChessboard());
+        dest /= GetChessboard().Size;
+        dest *= Chessboard.ChessboardSize;
+        
+        int row = (int) dest.Y, column = (int) dest.X;
+
+        if (row < 0 || column < 0 || row >= Chessboard.ChessboardSize || column >= Chessboard.ChessboardSize)
+        {
+            ParentTile.Children.Add(this);
+        }
+        else
+        {
+            var newPrentTile = GetChessboard()[row, column];
+            ParentTile = newPrentTile;
+            newPrentTile.Children.Add(this);
+        }
     }
 
     private void PositionToPointer(PointerEventArgs e)
