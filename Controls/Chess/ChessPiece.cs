@@ -38,6 +38,9 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
 
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
+        if (PlayerType != GetChessboard().PlayerTurn)
+            return;
+        
         var canvas = GetChessboard().OverlayCanvas;
         var window = MainWindow.Instance!;
         
@@ -86,6 +89,7 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
             }
 
             newPrentTile.ContainedChessPiece = this;
+            GetChessboard().PlayerTurn = 1 - GetChessboard().PlayerTurn;
         }
         else
         {

@@ -6,6 +6,8 @@ namespace chess_frontend.Controls.Chess;
 public class Chessboard : Grid
 {
     public const int ChessboardSize = 8;
+
+    public PlayerType PlayerTurn { get; set; } = PlayerType.White;
     
     public Canvas OverlayCanvas { get; set; }
 
