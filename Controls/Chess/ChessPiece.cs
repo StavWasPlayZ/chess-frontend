@@ -14,31 +14,33 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
     public readonly Type PieceType;
     public readonly PlayerType PlayerType;
     
-    public int X { get; set; }
-    public int Y { get; set; }
+    public ChessboardTile ParentTile { get; set; }
     
-    public ChessPiece(Chessboard chessboard, Type pieceType, PlayerType playerType, int x, int y) :
+    public ChessPiece(Chessboard chessboard, ChessboardTile parentTile,
+            Type pieceType, PlayerType playerType) :
         base(BaseUri)
     {
         _chessboard = chessboard;
+        ParentTile = parentTile;
+        
         PieceType = pieceType;
         PlayerType = playerType;
-        
-        X = x;
-        Y = y;
         
         Width = Height = _chessboard.Size / Chessboard.ChessboardSize;
 
         Path = "/Assets/pieces/"
                + $"{playerType.ToString().ToLower()}_{pieceType.ToString().ToLower()}.svg";
+        
+        PointerPressed += OnPointerPressed;
     }
+    
 
-
-    public void StartFollowingPointer(PointerPressedEventArgs e)
+    private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         var canvas = GetChessboard().OverlayCanvas;
         var window = MainWindow.Instance!;
         
+        ParentTile.Children.Remove(this);
         canvas.Children.Add(this);
         
         window.PointerMoved += OnPointerMoved;
@@ -46,7 +48,6 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         
         PositionToPointer(e);
     }
-
     private void OnPointerMoved(object? sender, PointerEventArgs e)
     {
         PositionToPointer(e);
@@ -62,11 +63,12 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         window.PointerReleased -= OnPointerReleased;
         
         //TODO figure out where to place now
+        ParentTile.Children.Add(this);
     }
 
     private void PositionToPointer(PointerEventArgs e)
     {
-        var point = e.GetPosition(GetChessboard().OverlayCanvas);
+        var point = e.GetPosition(MainWindow.Instance);
         point -= new Point(1, 1) * (Width / 2);
         
         Canvas.SetLeft(this, point.X);

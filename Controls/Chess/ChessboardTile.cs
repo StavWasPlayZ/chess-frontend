@@ -36,18 +36,9 @@ public class ChessboardTile : Panel
             if (value != null)
             {
                 Children.Add(value);
-                value.PointerPressed += OnChessPiecePressed;
+                value.ParentTile = this;
             }
         }
-    }
-
-    private void OnChessPiecePressed(object? sender, PointerPressedEventArgs e)
-    {
-        var piece = ContainedChessPiece!;
-        piece.PointerPressed -= OnChessPiecePressed;
-        
-        Children.Remove(piece);
-        piece.StartFollowingPointer(e);
     }
 
     public Chessboard GetChessboard() => _chessboard;

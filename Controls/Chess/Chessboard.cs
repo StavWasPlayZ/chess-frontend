@@ -114,9 +114,9 @@ public class Chessboard : Grid
                 
         _tiles[row, column].ContainedChessPiece = new ChessPiece(
             this,
+            _tiles[row, column],
             pieceType,
-            (row < ChessboardSize / 2) ? PlayerType.Black : PlayerType.White,
-            column, row
+            (row < ChessboardSize / 2) ? PlayerType.Black : PlayerType.White
         );
     }
 }
