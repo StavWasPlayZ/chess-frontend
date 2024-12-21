@@ -3,6 +3,7 @@
         xmlns:vm="using:chess_frontend.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:chess_frontend.Controls"
         mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
         Width="900" Height="600"
         x:Class="chess_frontend.Views.MainWindow"
@@ -18,14 +19,13 @@
     </Design.DataContext>
 
     
-    <Grid
+    <controls:Chessboard
         x:Name="Chessboard"
-        Width="500"
-        Height="500"
+        Size="500"
         HorizontalAlignment="Left"
         Margin="50">
 
-    </Grid>
+    </controls:Chessboard>
     <!-- <Grid> -->
     <!--      -->
     <!-- </Grid> -->
