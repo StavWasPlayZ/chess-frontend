@@ -15,7 +15,7 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
     public readonly Type PieceType;
     public readonly PlayerType PlayerType;
     
-    public ChessboardTile ParentTile { get; set; }
+    public ChessboardTile? ParentTile { get; set; }
     
     public ChessPiece(Chessboard chessboard, ChessboardTile parentTile,
             Type pieceType, PlayerType playerType) :

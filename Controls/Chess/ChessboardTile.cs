@@ -93,18 +93,21 @@ public class ChessboardTile : Panel
         get => _containedChessPiece;
         set
         {
+            if (_containedChessPiece != null)
+            {
+                Children.Remove(_containedChessPiece);
+                _containedChessPiece.ParentTile = null;
+            }
+
             if (value == null)
             {
-                if (_containedChessPiece != null)
-                {
-                    Children.Remove(_containedChessPiece);
-                    _containedChessPiece = null;
-                }
+                _containedChessPiece = null;
                 return;
             }
             
             Children.Add(value);
             value.ParentTile = this;
+            _containedChessPiece = value;
         }
     }
 
