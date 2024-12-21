@@ -18,25 +18,35 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
     
-    
-    <Grid
-        ColumnDefinitions="Auto,*">
+    <Panel>
         
-        <chess:Chessboard
-            Grid.Column="0"
+        <Grid
+            ColumnDefinitions="Auto,*">
+        
+            <chess:Chessboard
+                Grid.Column="0"
             
-            x:Name="Chessboard"
-            Size="600"
-            HorizontalAlignment="Left"
-            Margin="50"/>
+                x:Name="MainChessboard"
+                Size="600"
+                HorizontalAlignment="Left"
+                Margin="50"/>
         
-        <Panel
-            Grid.Column="1"
-            Background="#262522"
+            <Panel
+                Grid.Column="1"
+                Background="#262522"
             >
         
-        </Panel>
-    </Grid>
+            </Panel>
+        </Grid>
+        
+        <Canvas
+            x:Name="OverlayCanvas"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+           
+        </Canvas>
+        
+    </Panel>
     
     
     <!-- <Grid> -->

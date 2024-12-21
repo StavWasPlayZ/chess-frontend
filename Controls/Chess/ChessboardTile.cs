@@ -1,5 +1,6 @@
 using System;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
 
 namespace chess_frontend.Controls.Chess;
@@ -25,7 +26,7 @@ public class ChessboardTile : Panel
         );
     }
     
-    public ChessPiece? ChessPiece
+    public ChessPiece? ContainedChessPiece
     {
         get => (ChessPiece?) Children[0];
         set
@@ -35,9 +36,19 @@ public class ChessboardTile : Panel
             if (value != null)
             {
                 Children.Add(value);
+                value.PointerPressed += OnChessPiecePressed;
             }
         }
     }
-    
+
+    private void OnChessPiecePressed(object? sender, PointerPressedEventArgs e)
+    {
+        var piece = ContainedChessPiece!;
+        piece.PointerPressed -= OnChessPiecePressed;
+        
+        Children.Remove(piece);
+        piece.StartFollowingPointer(e);
+    }
+
     public Chessboard GetChessboard() => _chessboard;
 }

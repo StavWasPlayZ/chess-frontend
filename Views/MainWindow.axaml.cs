@@ -6,12 +6,19 @@ namespace chess_frontend.Views;
 
 public partial class MainWindow : Window
 {
+    // public readonly Canvas OverlayCanvas;
+    public static MainWindow? Instance { get; private set; }
     
     public MainWindow()
     {
+        Instance = this;
         InitializeComponent();
-        
-        var chessboard = this.FindControl<Chessboard>("Chessboard");
+
+        MainChessboard.OverlayCanvas = OverlayCanvas;
+        MainChessboard.AttachedToVisualTree += (_, _) => MainChessboard.PopulateBoard();
+
+        // this.OverlayCanvas = this.FindControl<Chessboard>("OverlayCanvas");
+        // OverlayCanvas
         // if (chessboard is not null)
         // {
         //     InitializeChessboard(chessboard);

@@ -1,5 +1,8 @@
 using System;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
+using chess_frontend.Views;
 
 namespace chess_frontend.Controls.Chess;
 
@@ -23,12 +26,54 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         
         X = x;
         Y = y;
+        
+        Width = Height = _chessboard.Size / Chessboard.ChessboardSize;
 
         Path = "/Assets/pieces/"
                + $"{playerType.ToString().ToLower()}_{pieceType.ToString().ToLower()}.svg";
     }
-    
-    
+
+
+    public void StartFollowingPointer(PointerPressedEventArgs e)
+    {
+        var canvas = GetChessboard().OverlayCanvas;
+        var window = MainWindow.Instance!;
+        
+        canvas.Children.Add(this);
+        
+        window.PointerMoved += OnPointerMoved;
+        window.PointerReleased += OnPointerReleased;
+        
+        PositionToPointer(e);
+    }
+
+    private void OnPointerMoved(object? sender, PointerEventArgs e)
+    {
+        PositionToPointer(e);
+    }
+    private void OnPointerReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        var canvas = GetChessboard().OverlayCanvas;
+        var window = MainWindow.Instance!;
+        
+        canvas.Children.Remove(this);
+        
+        window.PointerMoved -= OnPointerMoved;
+        window.PointerReleased -= OnPointerReleased;
+        
+        //TODO figure out where to place now
+    }
+
+    private void PositionToPointer(PointerEventArgs e)
+    {
+        var point = e.GetPosition(GetChessboard().OverlayCanvas);
+        point -= new Point(1, 1) * (Width / 2);
+        
+        Canvas.SetLeft(this, point.X);
+        Canvas.SetTop(this, point.Y);
+    }
+
+
     public Chessboard GetChessboard() => _chessboard;
     
     

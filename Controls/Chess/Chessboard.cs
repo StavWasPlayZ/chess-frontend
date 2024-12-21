@@ -6,6 +6,8 @@ namespace chess_frontend.Controls.Chess;
 public class Chessboard : Grid
 {
     public const int ChessboardSize = 8;
+    
+    public Canvas OverlayCanvas { get; set; }
 
     public double Size
     {
@@ -14,11 +16,22 @@ public class Chessboard : Grid
     }
 
     private readonly ChessboardTile[,] _tiles = new ChessboardTile[ChessboardSize,ChessboardSize];
+    
+    public Chessboard(Canvas overlayCanvas)
+    {
+        OverlayCanvas = overlayCanvas;
+        AttachedToVisualTree += (_, _) => InitializeChessboard();
+    }
 
+    /**
+     * Constructs a Chessboard with no overlay canvas.
+     * This canvas MUST be later initialized.
+     */
     public Chessboard()
     {
-        AttachedToVisualTree += (sender, args) => InitializeChessboard();
+        AttachedToVisualTree += (_, _) => InitializeChessboard();
     }
+    
 
     private void InitializeChessboard()
     {
@@ -45,8 +58,6 @@ public class Chessboard : Grid
                 Children.Add(tile);
             }
         }
-
-        PopulateBoard();
     }
     
     
@@ -101,7 +112,7 @@ public class Chessboard : Grid
             pieceType = ChessPiece.Type.Pawn;
         }
                 
-        _tiles[row, column].ChessPiece = new ChessPiece(
+        _tiles[row, column].ContainedChessPiece = new ChessPiece(
             this,
             pieceType,
             (row < ChessboardSize / 2) ? PlayerType.Black : PlayerType.White,
