@@ -36,7 +36,7 @@ public class Chessboard : Grid
     }
 
     
-    private ChessboardTile? srcOld, destOld;
+    private ChessboardTile? _srcOld, _destOld;
 
     public void OnPieceCommittedMove(ChessPiece piece, int srcRow, int srcColumn)
     {        
@@ -45,16 +45,16 @@ public class Chessboard : Grid
         
         // Apply move coloring
         // Disable old
-        srcOld?.BackgroundToDefault();
-        destOld?.BackgroundToDefault();
+        _srcOld?.BackgroundToDefault();
+        _destOld?.BackgroundToDefault();
         
         // Activate new
         srcTile.BackgroundToMoved();
         destTile.BackgroundToMoved();
         
         // Cache 'em
-        srcOld = srcTile;
-        destOld = destTile;
+        _srcOld = srcTile;
+        _destOld = destTile;
         
         // Apply next turn
         PlayerTurn = 1 - PlayerTurn;
