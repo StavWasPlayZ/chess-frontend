@@ -52,7 +52,7 @@ public class Chessboard : Grid
     
     /**
      * Checks if the goal was reached from either the
-     * beggining or end of an array.
+     * beginning or end of an array.
      */
     private static bool MirrorCheck(int index, int goal, int size = ChessboardSize)
     {
