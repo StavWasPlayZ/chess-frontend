@@ -8,6 +8,7 @@ namespace chess_frontend.Controls.Chess;
 
 public class ChessPiece : Avalonia.Svg.Skia.Svg
 {
+    private const int PressScaleAddition = 5;
     private static readonly Uri BaseUri = new("avares://chess_frontend/");
     
     private readonly Chessboard _chessboard;
@@ -45,6 +46,9 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         
         window.PointerMoved += OnPointerMoved;
         window.PointerReleased += OnPointerReleased;
+
+        // Make it a lil larger
+        Width = Height = Width + PressScaleAddition;
         
         PositionToPointer(e);
     }
@@ -61,6 +65,8 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         
         window.PointerMoved -= OnPointerMoved;
         window.PointerReleased -= OnPointerReleased;
+        
+        Width = Height = Width - PressScaleAddition;
         
         //TODO figure out where to place now
         ParentTile.Children.Add(this);
