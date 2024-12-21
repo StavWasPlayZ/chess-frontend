@@ -17,15 +17,31 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
     
-    <controls:Chessboard
-        x:Name="Chessboard"
-        Size="500"
-        HorizontalAlignment="Left"
-        Margin="50">
-
-    </controls:Chessboard>
+    
+    <Grid
+        ColumnDefinitions="Auto,*">
+        
+        <controls:Chessboard
+            Grid.Column="0"
+            
+            x:Name="Chessboard"
+            Size="500"
+            HorizontalAlignment="Left"
+            Margin="50"/>
+        
+        <Panel
+            Grid.Column="1"
+            Background="#262522"
+            >
+        
+        <!-- <Svg Path="avares://chess_frontend/Assets/pieces/black_bishop.svg"></Svg> -->
+        
+        
+        </Panel>
+    </Grid>
+    
+    
     <!-- <Grid> -->
     <!--      -->
     <!-- </Grid> -->
