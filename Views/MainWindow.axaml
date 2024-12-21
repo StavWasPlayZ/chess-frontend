@@ -40,9 +40,7 @@
         </Grid>
         
         <Canvas
-            x:Name="OverlayCanvas"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch">
+            x:Name="OverlayCanvas">
            
         </Canvas>
         
