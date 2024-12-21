@@ -13,7 +13,7 @@ public class Chessboard : Grid
         set => SetValue(WidthProperty, value);
     }
 
-    private ChessboardTile[,] Tiles = new ChessboardTile[ChessboardSize,ChessboardSize];
+    private readonly ChessboardTile[,] _tiles = new ChessboardTile[ChessboardSize,ChessboardSize];
 
     public Chessboard()
     {
@@ -41,7 +41,7 @@ public class Chessboard : Grid
             for (var j = 0; j < ChessboardSize; j++)
             {
                 var tile = new ChessboardTile(this, i, j);
-                Tiles[i, j] = tile;
+                _tiles[i, j] = tile;
                 Children.Add(tile);
             }
         }
@@ -101,7 +101,7 @@ public class Chessboard : Grid
             pieceType = ChessPiece.Type.Pawn;
         }
                 
-        Tiles[row, column].ChessPiece = new ChessPiece(
+        _tiles[row, column].ChessPiece = new ChessPiece(
             pieceType,
             (row < ChessboardSize / 2) ? PlayerType.Black : PlayerType.White
         );
