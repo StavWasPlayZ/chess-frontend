@@ -28,16 +28,15 @@ public class ChessboardTile : Panel
     
     public ChessPiece? ContainedChessPiece
     {
-        get => (ChessPiece?) Children[0];
+        get => Children.Count == 0 ? null : (ChessPiece) Children[0];
         set
         {
             Children.Clear();
-
-            if (value != null)
-            {
-                Children.Add(value);
-                value.ParentTile = this;
-            }
+            if (value == null)
+                return;
+            
+            Children.Add(value);
+            value.ParentTile = this;
         }
     }
 

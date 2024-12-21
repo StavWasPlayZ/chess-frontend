@@ -79,7 +79,13 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         {
             var newPrentTile = GetChessboard()[row, column];
             ParentTile = newPrentTile;
-            newPrentTile.Children.Add(this);
+            
+            if (ParentTile.ContainedChessPiece != null)
+            {
+                //TODO: Fetch new score for player
+            }
+
+            newPrentTile.ContainedChessPiece = this;
         }
         else
         {
