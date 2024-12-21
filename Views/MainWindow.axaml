@@ -3,10 +3,9 @@
         xmlns:vm="using:chess_frontend.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:chess_frontend.Controls"
         xmlns:chess="clr-namespace:chess_frontend.Controls.Chess"
-        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
-        Width="900" Height="600"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
+        Width="1000" Height="700"
         x:Class="chess_frontend.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
@@ -27,7 +26,7 @@
             Grid.Column="0"
             
             x:Name="Chessboard"
-            Size="500"
+            Size="600"
             HorizontalAlignment="Left"
             Margin="50"/>
         
