@@ -76,28 +76,43 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         dest /= GetChessboard().Size;
         dest *= Chessboard.ChessboardSize;
         
-        int row = (int) dest.Y, column = (int) dest.X;
-
-        if (ValidateMove(row, column))
-        {
-            var newPrentTile = GetChessboard()[row, column];
-            ParentTile = newPrentTile;
-            
-            if (ParentTile.ContainedChessPiece != null)
-            {
-                //TODO: Fetch new score for player
-            }
-
-            newPrentTile.ContainedChessPiece = this;
-            GetChessboard().PlayerTurn = 1 - GetChessboard().PlayerTurn;
-        }
-        else
-        {
-            ParentTile.Children.Add(this);
-        }
+        TryMoveTo((int) dest.Y, (int) dest.X);
+    }
+    
+    private void PositionToPointer(PointerEventArgs e)
+    {
+        var point = e.GetPosition(MainWindow.Instance);
+        point -= new Point(1, 1) * (Width / 2);
+        
+        Canvas.SetLeft(this, point.X);
+        Canvas.SetTop(this, point.Y);
     }
 
-    private bool ValidateMove(int row, int column)
+
+    protected void TryMoveTo(int row, int column)
+    {
+        if (!ValidateMove(row, column))
+        {
+            ParentTile.ContainedChessPiece = this;
+            return;
+        }
+        
+        int srcRow = ParentTile.Row, srcColumn = ParentTile.Column;
+        
+        var newPrentTile = GetChessboard()[row, column];
+        ParentTile = newPrentTile;
+        
+        if (ParentTile.ContainedChessPiece != null)
+        {
+            //TODO: And add OnPieceToDevour
+            // And Fetch new score for player
+        }
+
+        newPrentTile.ContainedChessPiece = this;
+        GetChessboard().OnPieceCommittedMove(this, srcRow, srcColumn);
+    }
+
+    protected bool ValidateMove(int row, int column)
     {
         // While the backend does check for out-of-bounds behaviour,
         // we won't actually be able to determine where it will be on the board.
@@ -109,14 +124,6 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         return true;
     }
 
-    private void PositionToPointer(PointerEventArgs e)
-    {
-        var point = e.GetPosition(MainWindow.Instance);
-        point -= new Point(1, 1) * (Width / 2);
-        
-        Canvas.SetLeft(this, point.X);
-        Canvas.SetTop(this, point.Y);
-    }
 
 
     public Chessboard GetChessboard() => _chessboard;

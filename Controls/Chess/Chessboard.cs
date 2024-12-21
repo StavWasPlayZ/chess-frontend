@@ -7,7 +7,7 @@ public class Chessboard : Grid
 {
     public const int ChessboardSize = 8;
 
-    public PlayerType PlayerTurn { get; set; } = PlayerType.White;
+    public PlayerType PlayerTurn { get; private set; } = PlayerType.White;
     
     public Canvas OverlayCanvas { get; set; }
 
@@ -18,6 +18,9 @@ public class Chessboard : Grid
     }
 
     private readonly ChessboardTile[,] _tiles = new ChessboardTile[ChessboardSize,ChessboardSize];
+    
+    public ChessboardTile this[int row, int column] => _tiles[row, column];
+
     
     public Chessboard(Canvas overlayCanvas)
     {
@@ -31,9 +34,31 @@ public class Chessboard : Grid
     {
         AttachedToVisualTree += (_, _) => InitializeChessboard();
     }
+
     
+    private ChessboardTile? srcOld, destOld;
+
+    public void OnPieceCommittedMove(ChessPiece piece, int srcRow, int srcColumn)
+    {
+        PlayerTurn = 1 - PlayerTurn;
+        
+        ChessboardTile srcTile = _tiles[srcRow, srcColumn];
+        ChessboardTile destTile = piece.ParentTile;
+        
+        // Apply move coloring
+        // Disable old
+        srcOld?.BackgroundToDefault();
+        destOld?.BackgroundToDefault();
+        
+        // Activate new
+        srcTile.BackgroundToMoved();
+        destTile.BackgroundToMoved();
+        
+        // Cache 'em
+        srcOld = srcTile;
+        destOld = destTile;
+    }
     
-    public ChessboardTile this[int row, int column] => _tiles[row, column];
     
 
     private void InitializeChessboard()

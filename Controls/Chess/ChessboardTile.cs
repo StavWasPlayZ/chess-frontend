@@ -1,6 +1,4 @@
-using System;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Media;
 
 namespace chess_frontend.Controls.Chess;
@@ -9,6 +7,9 @@ public class ChessboardTile : Panel
 {
     private readonly Chessboard _chessboard;
     public readonly int Row, Column;
+
+    public static readonly SolidColorBrush MovedColor = SolidColorBrush.Parse("#f5f682");
+    public readonly SolidColorBrush DefColor;
     
     public ChessboardTile(Chessboard board, int row, int column)
     {
@@ -20,11 +21,24 @@ public class ChessboardTile : Panel
         Grid.SetRow(this, row);
         Grid.SetColumn(this, column);
 
-        Background = SolidColorBrush.Parse((row + column) % 2 == 0
+        DefColor = SolidColorBrush.Parse((row + column) % 2 == 0
             ? "#ebecd0"
             : "#739552"
         );
+        BackgroundToDefault();
     }
+
+    public void BackgroundToDefault()
+    {
+        Background = DefColor;
+    }
+    public void BackgroundToMoved()
+    {
+        Background = MovedColor;
+    }
+    
+    
+    
     
     public ChessPiece? ContainedChessPiece
     {
