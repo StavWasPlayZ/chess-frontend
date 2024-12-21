@@ -5,11 +5,19 @@ namespace chess_frontend.Controls.Chess;
 
 public class ChessboardTile : Panel
 {
+    private static readonly SolidColorBrush
+        DefColorLight = SolidColorBrush.Parse("#ebecd0"),
+        DefColorDark = SolidColorBrush.Parse("#739552"),
+            
+        MoveColorLight = SolidColorBrush.Parse("#f5f682"),
+        MoveColorDark = SolidColorBrush.Parse("#b9ca43")
+    ;
+    
     private readonly Chessboard _chessboard;
     public readonly int Row, Column;
 
-    public static readonly SolidColorBrush MovedColor = SolidColorBrush.Parse("#f5f682");
-    public readonly SolidColorBrush DefColor;
+    private readonly SolidColorBrush _defColor;
+    private readonly SolidColorBrush _moveColor;
     
     public ChessboardTile(Chessboard board, int row, int column)
     {
@@ -21,23 +29,28 @@ public class ChessboardTile : Panel
         Grid.SetRow(this, row);
         Grid.SetColumn(this, column);
 
-        DefColor = SolidColorBrush.Parse((row + column) % 2 == 0
-            ? "#ebecd0"
-            : "#739552"
-        );
+        if ((row + column) % 2 == 0)
+        {
+            _defColor = DefColorLight;
+            _moveColor = MoveColorLight;
+        }
+        else
+        {
+            _defColor = DefColorDark;
+            _moveColor = MoveColorDark;
+        }
+
         BackgroundToDefault();
     }
 
     public void BackgroundToDefault()
     {
-        Background = DefColor;
+        Background = _defColor;
     }
     public void BackgroundToMoved()
     {
-        Background = MovedColor;
+        Background = _moveColor;
     }
-    
-    
     
     
     public ChessPiece? ContainedChessPiece

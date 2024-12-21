@@ -39,11 +39,9 @@ public class Chessboard : Grid
     private ChessboardTile? srcOld, destOld;
 
     public void OnPieceCommittedMove(ChessPiece piece, int srcRow, int srcColumn)
-    {
-        PlayerTurn = 1 - PlayerTurn;
-        
-        ChessboardTile srcTile = _tiles[srcRow, srcColumn];
-        ChessboardTile destTile = piece.ParentTile;
+    {        
+        var srcTile = _tiles[srcRow, srcColumn];
+        var destTile = piece.ParentTile;
         
         // Apply move coloring
         // Disable old
@@ -57,6 +55,9 @@ public class Chessboard : Grid
         // Cache 'em
         srcOld = srcTile;
         destOld = destTile;
+        
+        // Apply next turn
+        PlayerTurn = 1 - PlayerTurn;
     }
     
     
