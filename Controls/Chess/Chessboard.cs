@@ -23,6 +23,7 @@ public class Chessboard : Grid
     private void InitializeChessboard()
     {
         // Apply row/column definitions
+        // Test
         RowDefinitions = [];
         ColumnDefinitions = [];
         
