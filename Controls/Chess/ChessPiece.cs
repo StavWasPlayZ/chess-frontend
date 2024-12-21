@@ -38,8 +38,11 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
 
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (PlayerType != GetChessboard().PlayerTurn)
-            return;
+        // While this should really be a thing,
+        // one of the backend checks is this.
+        // So we shan't.
+        // if (PlayerType != GetChessboard().PlayerTurn)
+        //     return;
         
         var canvas = GetChessboard().OverlayCanvas;
         var window = MainWindow.Instance!;
