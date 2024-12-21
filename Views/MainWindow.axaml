@@ -33,9 +33,8 @@
                     Margin="50"/>
                 
                 <Canvas
-                    x:Name="OverlayCanvas">
-                </Canvas>
-                
+                    x:Name="OverlayCanvas" />
+
             </Panel>
         
             <Panel
@@ -43,6 +42,14 @@
                 Background="#262522"
             >
         
+                <TextBlock 
+                    Text="Hi Mom"
+                    Width="100"
+                    Height="100"
+                    FontSize="18"
+                    Foreground="White"
+                    />
+                
             </Panel>
         </Grid>
         

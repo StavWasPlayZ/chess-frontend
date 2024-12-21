@@ -1,4 +1,6 @@
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Layout;
 using Avalonia.Media;
 
 namespace chess_frontend.Controls.Chess;
@@ -39,8 +41,39 @@ public class ChessboardTile : Panel
             _defColor = DefColorDark;
             _moveColor = MoveColorDark;
         }
-
         BackgroundToDefault();
+        
+        // Letter & numbers on sides
+        var textColor = _defColor == DefColorDark ? DefColorLight : DefColorDark;
+        
+        if (row == Chessboard.ChessboardSize - 1)
+        {
+            Children.Add(new TextBlock
+            {
+                Text = ((char)(column + 'a')).ToString(),
+                    
+                FontSize = 18,
+                Foreground = textColor,
+                FontWeight = FontWeight.Medium,
+                
+                Margin = new Thickness(5),
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Right,
+            });
+        }
+        if (column == 0)
+        {
+            Children.Add(new TextBlock
+            {
+                Text = (Chessboard.ChessboardSize - row).ToString(),
+                    
+                FontSize = 18,
+                Foreground = textColor,
+                FontWeight = FontWeight.Medium,
+                
+                Margin = new Thickness(5)
+            });
+        }
     }
 
     public void BackgroundToDefault()
@@ -60,7 +93,6 @@ public class ChessboardTile : Panel
         get => _containedChessPiece;
         set
         {
-            Children.Clear();
             if (value == null)
             {
                 if (_containedChessPiece != null)
