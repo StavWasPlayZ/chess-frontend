@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:chess_frontend.Controls"
+        xmlns:chess="clr-namespace:chess_frontend.Controls.Chess"
         mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
         Width="900" Height="600"
         x:Class="chess_frontend.Views.MainWindow"
@@ -22,7 +23,7 @@
     <Grid
         ColumnDefinitions="Auto,*">
         
-        <controls:Chessboard
+        <chess:Chessboard
             Grid.Column="0"
             
             x:Name="Chessboard"

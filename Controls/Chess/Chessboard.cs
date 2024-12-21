@@ -1,11 +1,11 @@
 using Avalonia.Controls;
 using Avalonia.Media;
 
-namespace chess_frontend.Controls;
+namespace chess_frontend.Controls.Chess;
 
 public class Chessboard : Grid
 {
-    private const int ChessboardSize = 8;
+    public const int ChessboardSize = 8;
 
     public double Size
     {
@@ -33,26 +33,12 @@ public class Chessboard : Grid
             RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
         }
         
-        // Add panels
-        var size = Size / ChessboardSize;
-        
+        // Add chess tiles
         for (var i = 0; i < ChessboardSize; i++)
         {
             for (var j = 0; j < ChessboardSize; j++)
-            {
-                var panel = new Panel
-                {
-                    Background = SolidColorBrush.Parse((i + j) % 2 == 0
-                        ? "#ebecd0"
-                        : "#739552"
-                    ),
-                    Width = size,
-                    Height = size
-                };
-                SetRow(panel, i);
-                SetColumn(panel, j);
-                
-                Children.Add(panel);
+            {   
+                Children.Add(new ChessboardTile(this, i, j));
             }
         }
     }

@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using chess_frontend.Controls;
+using chess_frontend.Controls.Chess;
 
 namespace chess_frontend.Views;
 
