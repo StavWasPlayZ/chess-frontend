@@ -29,9 +29,9 @@
                 
                 <chess:Chessboard
                     x:Name="MainChessboard"
-                    Size="400"
+                    Size="450"
                     HorizontalAlignment="Left"
-                    Margin="50"/>
+                    Margin="25"/>
                 
                 <Canvas
                     x:Name="OverlayCanvas" />
