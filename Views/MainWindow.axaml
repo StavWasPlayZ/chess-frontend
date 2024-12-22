@@ -43,22 +43,30 @@
                 Background="#262522"
             >
         
-                <TextBlock 
-                    Text="Hi Mom"
-                    FontSize="18"
-                    Foreground="White"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    />
+                <ScrollViewer
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+                    
+                    <Panel
+                        Margin="10">
+                        <StackPanel
+                            Name="LogOutputStack">
+                        
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="18"
+                                Foreground="White"
+                                Margin="5"
+                            />
+                        
+                        </StackPanel>
+                    </Panel>
+                    
+                </ScrollViewer>
                 
             </Panel>
         </Grid>
         
     </Panel>
-    
-    
-    <!-- <Grid> -->
-    <!--      -->
-    <!-- </Grid> -->
 
 </Window>
