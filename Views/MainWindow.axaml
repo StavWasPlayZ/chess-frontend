@@ -8,7 +8,6 @@
         Width="800" Height="500"
         x:Class="chess_frontend.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        CanResize="False"
         Icon="/Assets/avalonia-logo.ico"
         Title="Rules of The Game"
         Background="#302e2b">
