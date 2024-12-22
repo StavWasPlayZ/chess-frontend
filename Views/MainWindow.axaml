@@ -44,25 +44,24 @@
                 <StackPanel
                     Margin="30 0">
                     
+                    <!--Height has to be set here for scroller to work.-->
                     <TextBlock
+                        x:Name="RightPanelTitle"
                         Text="LOG VIEWER"
                         FontWeight="Black"
                         FontSize="27"
                         Foreground="White"
+                        
                         HorizontalAlignment="Center"
-                        Background="Transparent"
                         Margin="0 30 0 0"
                     />
                     <Separator
                         Background="White"
                         Margin="0 10 0 0" />
 
-                    <!--TODO: Set height programmatically-->
-                    <!--Height has to be set for the scroller to work.-->
                     <ScrollViewer
                         x:Name="LogScroller"
-                        HorizontalAlignment="Stretch"
-                        Height="400">
+                        HorizontalAlignment="Stretch">
                 
                         <StackPanel
                             x:Name="LogOutputStack"

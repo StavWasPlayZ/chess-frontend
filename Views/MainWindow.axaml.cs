@@ -26,6 +26,10 @@ public partial class MainWindow : Window
         if (e.HeightChanged)
         {
             MainChessboard.Size = e.NewSize.Height - 2 * MainChessboard.Margin.Left;
+            
+            // Height has to be set for the scroller to work.
+            // 50 is around the size of the text.
+            LogScroller.Height = Height - (RightPanelTitle.Bounds.Height + 2 * RightPanelTitle.Margin.Top);
         }
     }
 
