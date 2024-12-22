@@ -24,6 +24,8 @@ public class Chessboard : Grid
         _tiles[point.Y, point.X];
     public void SetTileAt(ChessPoint point, ChessboardTile tile) =>
         _tiles[point.Y, point.X] = tile;
+    
+    public double TileSize => Size / ChessboardSize;
 
     
     public Chessboard(Canvas overlayCanvas)

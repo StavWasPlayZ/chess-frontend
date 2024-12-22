@@ -27,7 +27,7 @@ public class ChessboardTile : Panel
     {
         Position = position;
         _chessboard = board;
-        Width = Height = board.Size / Chessboard.ChessboardSize;
+        Width = Height = board.TileSize;
         
         Grid.SetRow(this, Position.Y);
         Grid.SetColumn(this, Position.X);

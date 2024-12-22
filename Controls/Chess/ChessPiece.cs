@@ -30,7 +30,7 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         PieceType = pieceType;
         PlayerType = playerType;
         
-        Width = Height = _chessboard.Size / Chessboard.ChessboardSize;
+        Width = Height = _chessboard.TileSize;
 
         Path = "/Assets/pieces/"
                + $"{playerType.ToString().ToLower()}_{pieceType.ToString().ToLower()}.svg";
