@@ -37,6 +37,8 @@ public partial class MainWindow : Window
             Foreground = brush,
             Margin = new Thickness(0, 5)
         });
+
+        LogScroller.ScrollToEnd();
     }
 }
 

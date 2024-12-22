@@ -61,11 +61,12 @@
                     <!--TODO: Set height programmatically-->
                     <!--Height has to be set for the scroller to work.-->
                     <ScrollViewer
+                        x:Name="LogScroller"
                         HorizontalAlignment="Stretch"
                         Height="400">
                 
                         <StackPanel
-                            Name="LogOutputStack"
+                            x:Name="LogOutputStack"
                             Margin="0 10" />
 
                     </ScrollViewer>
