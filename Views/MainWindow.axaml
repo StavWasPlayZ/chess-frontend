@@ -4,13 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:chess="clr-namespace:chess_frontend.Controls.Chess"
-        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
-        Width="1000" Height="700"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500"
+        Width="800" Height="500"
         x:Class="chess_frontend.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         CanResize="False"
         Icon="/Assets/avalonia-logo.ico"
-        Title="chess_frontend"
+        Title="Rules of The Game"
         Background="#302e2b">
 
     <Design.DataContext>
@@ -29,7 +29,7 @@
                 
                 <chess:Chessboard
                     x:Name="MainChessboard"
-                    Size="600"
+                    Size="400"
                     HorizontalAlignment="Left"
                     Margin="50"/>
                 
@@ -40,30 +40,309 @@
         
             <Panel
                 Grid.Column="1"
-                Background="#262522"
-            >
-        
-                <ScrollViewer
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch">
+                Background="#262522">
+                
+                <StackPanel
+                    Margin="30 0">
                     
-                    <Panel
-                        Margin="10">
+                    <TextBlock
+                        Text="LOG VIEWER"
+                        FontWeight="Black"
+                        FontSize="30"
+                        Foreground="White"
+                        HorizontalAlignment="Center"
+                        Background="Transparent"
+                        Margin="0 30 0 0"
+                    />
+                    <Separator
+                        Background="White"
+                        Margin="0 10"></Separator>
+                    
+                    <!--TODO: Set height programmatically-->
+                    <!--Height has to be set for the scroller to work.-->
+                    <ScrollViewer
+                        HorizontalAlignment="Stretch"
+                        
+                        Height="500">
+                
                         <StackPanel
                             Name="LogOutputStack">
-                        
+                
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="18"
+                                FontSize="14"
                                 Foreground="White"
-                                Margin="5"
+                                Margin="0 5"
                             />
-                        
-                        </StackPanel>
-                    </Panel>
-                    
-                </ScrollViewer>
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
+                            <TextBlock 
+                                Text="Hi Mom"
+                                FontSize="14"
+                                Foreground="White"
+                                Margin="0 5"
+                            />
                 
+                        </StackPanel>
+                        
+                    </ScrollViewer>
+                </StackPanel>
             </Panel>
         </Grid>
         
