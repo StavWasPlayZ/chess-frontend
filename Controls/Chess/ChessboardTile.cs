@@ -75,7 +75,17 @@ public class ChessboardTile : Panel
                 Margin = new Thickness(5)
             });
         }
+        
+        GetChessboard().SizeChanged += OnChessboardSizeChanged;
     }
+    
+    
+    private void OnChessboardSizeChanged(object? sender, SizeChangedEventArgs e)
+    {
+        this.SetSize(GetChessboard().TileSize);
+        ContainedChessPiece?.SetSize(GetChessboard().TileSize);
+    }
+    
 
     public void BackgroundToDefault()
     {

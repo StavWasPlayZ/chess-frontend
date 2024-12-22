@@ -17,6 +17,16 @@ public partial class MainWindow : Window
 
         MainChessboard.OverlayCanvas = OverlayCanvas;
         MainChessboard.AttachedToVisualTree += (_, _) => MainChessboard.PopulateBoard();
+        
+        SizeChanged += OnSizeChanged;
+    }
+
+    private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
+    {
+        if (e.HeightChanged)
+        {
+            MainChessboard.Size = e.NewSize.Height - 2 * MainChessboard.Margin.Left;
+        }
     }
 
     public void LogToPanel(string text, LogType logType, IBrush? brush = null)

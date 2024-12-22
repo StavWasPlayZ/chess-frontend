@@ -1,5 +1,6 @@
 using System;
 using Avalonia.Controls;
+using Avalonia.VisualTree;
 using chess_frontend.Util;
 
 namespace chess_frontend.Controls.Chess;
@@ -15,7 +16,12 @@ public class Chessboard : Grid
     public double Size
     {
         get => GetValue(WidthProperty);
-        set => SetValue(WidthProperty, value);
+        set
+        {
+            SetValue(WidthProperty, value);
+            SetValue(HeightProperty, value);
+            UpdateChessboardSize();
+        }
     }
 
     private readonly ChessboardTile[,] _tiles = new ChessboardTile[ChessboardSize,ChessboardSize];
@@ -25,7 +31,7 @@ public class Chessboard : Grid
     public void SetTileAt(ChessPoint point, ChessboardTile tile) =>
         _tiles[point.Y, point.X] = tile;
     
-    public double TileSize => Size / ChessboardSize;
+    public double TileSize { get; private set; }
 
     
     public Chessboard(Canvas overlayCanvas)
@@ -70,6 +76,8 @@ public class Chessboard : Grid
 
     private void InitializeChessboard()
     {
+        TileSize = Size / ChessboardSize;
+        
         // Apply row/column definitions
         RowDefinitions = [];
         ColumnDefinitions = [];
@@ -98,8 +106,26 @@ public class Chessboard : Grid
             }
         }
     }
-    
-    
+
+    private void UpdateChessboardSize()
+    {
+        if (!this.IsAttachedToVisualTree())
+            return;
+        
+        TileSize = Size / ChessboardSize;
+        var gSize = new GridLength(TileSize);
+        
+        for (var i = 0; i < ChessboardSize; i++)
+        {
+            for (var j = 0; j < ChessboardSize; j++)
+            {
+                ColumnDefinitions[j].Width = gSize;
+            }
+            RowDefinitions[i].Height = gSize;
+        }
+    }
+
+
     /**
      * Checks if the goal was reached from either the
      * beginning or end of an array.
