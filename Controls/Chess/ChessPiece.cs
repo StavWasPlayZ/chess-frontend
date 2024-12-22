@@ -106,7 +106,9 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         var srcPos = Position;
         var destTile = GetChessboard().GetTileAt(destination);
         
-        if (destTile.ContainedChessPiece != null)
+        // Also check if dest is source because otherwise it will
+        // create a self-eating paradox.
+        if (destTile.ContainedChessPiece != null && destTile != ParentTile)
         {
             destTile.ContainedChessPiece.PointerPressed -= OnPointerPressed;
             //TODO: And add OnPieceToDevour
