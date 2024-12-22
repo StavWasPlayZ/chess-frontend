@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
+using chess_frontend.Util;
 
 namespace chess_frontend.Controls.Chess;
 
@@ -16,22 +17,22 @@ public class ChessboardTile : Panel
     ;
     
     private readonly Chessboard _chessboard;
-    public readonly int Row, Column;
+
+    public ChessPoint Position { get; }
 
     private readonly SolidColorBrush _defColor;
     private readonly SolidColorBrush _moveColor;
     
-    public ChessboardTile(Chessboard board, int row, int column)
+    public ChessboardTile(Chessboard board, ChessPoint position)
     {
+        Position = position;
         _chessboard = board;
         Width = Height = board.Size / Chessboard.ChessboardSize;
         
-        Row = row;
-        Column = column;
-        Grid.SetRow(this, row);
-        Grid.SetColumn(this, column);
+        Grid.SetRow(this, Position.Y);
+        Grid.SetColumn(this, Position.X);
 
-        if ((row + column) % 2 == 0)
+        if ((Position.X + Position.Y) % 2 == 0)
         {
             _defColor = DefColorLight;
             _moveColor = MoveColorLight;
@@ -46,11 +47,11 @@ public class ChessboardTile : Panel
         // Letter & numbers on sides
         var textColor = _defColor == DefColorDark ? DefColorLight : DefColorDark;
         
-        if (row == Chessboard.ChessboardSize - 1)
+        if (Position.Y == Chessboard.ChessboardSize - 1)
         {
             Children.Add(new TextBlock
             {
-                Text = ((char)(column + 'a')).ToString(),
+                Text = ((char)(Position.X + 'a')).ToString(),
                     
                 FontSize = 18,
                 Foreground = textColor,
@@ -61,11 +62,11 @@ public class ChessboardTile : Panel
                 HorizontalAlignment = HorizontalAlignment.Right,
             });
         }
-        if (column == 0)
+        if (Position.X == 0)
         {
             Children.Add(new TextBlock
             {
-                Text = (Chessboard.ChessboardSize - row).ToString(),
+                Text = (Chessboard.ChessboardSize - Position.Y).ToString(),
                     
                 FontSize = 18,
                 Foreground = textColor,

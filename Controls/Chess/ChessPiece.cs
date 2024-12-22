@@ -2,6 +2,7 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using chess_frontend.Util;
 using chess_frontend.Views;
 
 namespace chess_frontend.Controls.Chess;
@@ -15,7 +16,9 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
     public readonly Type PieceType;
     public readonly PlayerType PlayerType;
     
-    public ChessboardTile? ParentTile { get; set; }
+    public ChessboardTile ParentTile { get; set; }
+
+    public ChessPoint Position => ParentTile.Position;
     
     public ChessPiece(Chessboard chessboard, ChessboardTile parentTile,
             Type pieceType, PlayerType playerType) :
@@ -79,7 +82,7 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         dest /= GetChessboard().Size;
         dest *= Chessboard.ChessboardSize;
         
-        TryMoveTo((int) dest.Y, (int) dest.X);
+        TryMoveTo(dest.AsChessPoint());
     }
     
     private void PositionToPointer(PointerEventArgs e)
@@ -92,40 +95,40 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
     }
 
 
-    protected void TryMoveTo(int row, int column)
+    protected void TryMoveTo(ChessPoint destination)
     {
-        if (!ValidateMove(row, column))
+        if (!ValidateMove(destination))
         {
-            ParentTile!.ContainedChessPiece = this;
+            ParentTile.ContainedChessPiece = this;
             return;
         }
+
+        var srcPos = Position;
+        var destTile = GetChessboard().GetTileAt(destination);
         
-        int srcRow = ParentTile!.Row, srcColumn = ParentTile.Column;
-        var newParentTile = GetChessboard()[row, column];
-        
-        if (newParentTile.ContainedChessPiece != null)
+        if (destTile.ContainedChessPiece != null)
         {
-            newParentTile.ContainedChessPiece.PointerPressed -= OnPointerPressed;
+            destTile.ContainedChessPiece.PointerPressed -= OnPointerPressed;
             //TODO: And add OnPieceToDevour
             // And Fetch new score for player
         }
 
         ParentTile.ContainedChessPiece = null;
-        newParentTile.ContainedChessPiece = this;
+        destTile.ContainedChessPiece = this;
         
-        ParentTile = newParentTile;
-        GetChessboard().OnPieceCommittedMove(this, srcRow, srcColumn);
+        ParentTile = destTile;
+        GetChessboard().OnPieceCommittedMove(this, srcPos);
     }
 
-    protected bool ValidateMove(int row, int column)
+    protected bool ValidateMove(ChessPoint destination)
     {
-        var srcCN = ToChessNotation(ParentTile!.Row, ParentTile.Column);
-        var destCN = ToChessNotation(row, column);
+        var srcCN = Position.AsChessNotation;
+        var destCN = destination.AsChessNotation;
         MainWindow.Instance!.LogToPanel($"Committing move: {srcCN + destCN}", LogType.Info);
 
         // While the backend does check for out-of-bounds behaviour,
         // we won't actually be able to determine where it will be on the board.
-        if (row < 0 || column < 0 || row >= Chessboard.ChessboardSize || column >= Chessboard.ChessboardSize)
+        if (destination.IsOutOfBounds)
             return false;
         
         //TODO backend call
@@ -135,12 +138,6 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         MainWindow.Instance.LogToPanel($"Backend returned OK ({statusCode})", LogType.Success);
         return true;
     }
-
-    private static string ToChessNotation(int x, int y)
-    {
-        return $"{(char)(x + 'a')}{Chessboard.ChessboardSize - y}";
-    }
-
 
 
     public Chessboard GetChessboard() => _chessboard;

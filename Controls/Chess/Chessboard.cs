@@ -1,5 +1,6 @@
 using System;
 using Avalonia.Controls;
+using chess_frontend.Util;
 
 namespace chess_frontend.Controls.Chess;
 
@@ -19,7 +20,10 @@ public class Chessboard : Grid
 
     private readonly ChessboardTile[,] _tiles = new ChessboardTile[ChessboardSize,ChessboardSize];
     
-    public ChessboardTile this[int row, int column] => _tiles[row, column];
+    public ChessboardTile GetTileAt(ChessPoint point) =>
+        _tiles[point.Y, point.X];
+    public void SetTileAt(ChessPoint point, ChessboardTile tile) =>
+        _tiles[point.Y, point.X] = tile;
 
     
     public Chessboard(Canvas overlayCanvas)
@@ -38,9 +42,9 @@ public class Chessboard : Grid
     
     private ChessboardTile? _srcOld, _destOld;
 
-    public void OnPieceCommittedMove(ChessPiece piece, int srcRow, int srcColumn)
+    public void OnPieceCommittedMove(ChessPiece piece, ChessPoint source)
     {        
-        var srcTile = _tiles[srcRow, srcColumn];
+        var srcTile = GetTileAt(source);
         var destTile = piece.ParentTile;
         
         // Apply move coloring
@@ -82,8 +86,10 @@ public class Chessboard : Grid
         {
             for (var j = 0; j < ChessboardSize; j++)
             {
-                var tile = new ChessboardTile(this, i, j);
-                _tiles[i, j] = tile;
+                var pos = new ChessPoint(i, j);
+                
+                var tile = new ChessboardTile(this, pos);
+                SetTileAt(pos, tile);
                 Children.Add(tile);
             }
         }
@@ -140,7 +146,7 @@ public class Chessboard : Grid
         {
             pieceType = ChessPiece.Type.Pawn;
         }
-                
+        
         _tiles[row, column].ContainedChessPiece = new ChessPiece(
             this,
             _tiles[row, column],
