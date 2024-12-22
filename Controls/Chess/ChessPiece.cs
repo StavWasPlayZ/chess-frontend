@@ -129,7 +129,10 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         // While the backend does check for out-of-bounds behaviour,
         // we won't actually be able to determine where it will be on the board.
         if (destination.IsOutOfBounds)
+        {
+            MainWindow.Instance.LogToPanel("BAD MOVE: Destination out of bounds", LogType.Error);
             return false;
+        }
         
         //TODO backend call
 
