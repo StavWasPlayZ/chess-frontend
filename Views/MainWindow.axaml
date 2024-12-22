@@ -66,17 +66,8 @@
                 
                         <StackPanel
                             Name="LogOutputStack"
-                            Margin="0 10">
-                
-                            <TextBlock 
-                                Text="Hi Mom"
-                                FontSize="13"
-                                Foreground="White"
-                                Margin="0 4"
-                            />
-                
-                        </StackPanel>
-                        
+                            Margin="0 10" />
+
                     </ScrollViewer>
                 </StackPanel>
             </Panel>

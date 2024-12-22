@@ -117,14 +117,26 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
 
     protected bool ValidateMove(int row, int column)
     {
+        var srcCN = ToChessNotation(ParentTile.Row, ParentTile.Column);
+        var destCN = ToChessNotation(row, column);
+        MainWindow.Instance!.LogToPanel($"Committing move: {srcCN + destCN}", LogType.Info);
+
         // While the backend does check for out-of-bounds behaviour,
         // we won't actually be able to determine where it will be on the board.
         if (row < 0 || column < 0 || row >= Chessboard.ChessboardSize || column >= Chessboard.ChessboardSize)
             return false;
         
         //TODO backend call
-        
+
+        var statusCode = 0;
+        // TODO: Log out different stuff.
+        MainWindow.Instance.LogToPanel($"Backend returned OK ({statusCode})", LogType.Success);
         return true;
+    }
+
+    private static string ToChessNotation(int x, int y)
+    {
+        return $"{(char)(x + 'a')}{Chessboard.ChessboardSize - y}";
     }
 
 
