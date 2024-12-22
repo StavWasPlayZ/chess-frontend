@@ -77,7 +77,7 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         
         Width = Height = Width - PressScaleAddition;
         
-        //Figure out where to place now
+        // Figure out where to place now
         var dest = e.GetPosition(GetChessboard());
         dest /= GetChessboard().Size;
         dest *= Chessboard.ChessboardSize;
