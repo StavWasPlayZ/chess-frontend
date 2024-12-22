@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -95,15 +94,13 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
 
     protected void TryMoveTo(int row, int column)
     {
-        Debug.Assert(ParentTile is not null);
-        
         if (!ValidateMove(row, column))
         {
-            ParentTile.ContainedChessPiece = this;
+            ParentTile!.ContainedChessPiece = this;
             return;
         }
         
-        int srcRow = ParentTile.Row, srcColumn = ParentTile.Column;
+        int srcRow = ParentTile!.Row, srcColumn = ParentTile.Column;
         var newParentTile = GetChessboard()[row, column];
         
         if (newParentTile.ContainedChessPiece != null)
@@ -122,7 +119,7 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
 
     protected bool ValidateMove(int row, int column)
     {
-        var srcCN = ToChessNotation(ParentTile.Row, ParentTile.Column);
+        var srcCN = ToChessNotation(ParentTile!.Row, ParentTile.Column);
         var destCN = ToChessNotation(row, column);
         MainWindow.Instance!.LogToPanel($"Committing move: {srcCN + destCN}", LogType.Info);
 
