@@ -48,7 +48,7 @@
                     <TextBlock
                         Text="LOG VIEWER"
                         FontWeight="Black"
-                        FontSize="30"
+                        FontSize="27"
                         Foreground="White"
                         HorizontalAlignment="Center"
                         Background="Transparent"
@@ -56,287 +56,287 @@
                     />
                     <Separator
                         Background="White"
-                        Margin="0 10"></Separator>
-                    
+                        Margin="0 10 0 0" />
+
                     <!--TODO: Set height programmatically-->
                     <!--Height has to be set for the scroller to work.-->
                     <ScrollViewer
                         HorizontalAlignment="Stretch"
-                        
-                        Height="500">
+                        Height="400">
                 
                         <StackPanel
-                            Name="LogOutputStack">
+                            Name="LogOutputStack"
+                            Margin="0 10">
                 
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                             <TextBlock 
                                 Text="Hi Mom"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="White"
-                                Margin="0 5"
+                                Margin="0 4"
                             />
                 
                         </StackPanel>
