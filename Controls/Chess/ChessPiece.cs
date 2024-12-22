@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -94,6 +95,8 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
 
     protected void TryMoveTo(int row, int column)
     {
+        Debug.Assert(ParentTile is not null);
+        
         if (!ValidateMove(row, column))
         {
             ParentTile.ContainedChessPiece = this;
@@ -101,17 +104,19 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         }
         
         int srcRow = ParentTile.Row, srcColumn = ParentTile.Column;
+        var newParentTile = GetChessboard()[row, column];
         
-        var newPrentTile = GetChessboard()[row, column];
-        ParentTile = newPrentTile;
-        
-        if (ParentTile.ContainedChessPiece != null)
+        if (newParentTile.ContainedChessPiece != null)
         {
+            newParentTile.ContainedChessPiece.PointerPressed -= OnPointerPressed;
             //TODO: And add OnPieceToDevour
             // And Fetch new score for player
         }
 
-        newPrentTile.ContainedChessPiece = this;
+        ParentTile.ContainedChessPiece = null;
+        newParentTile.ContainedChessPiece = this;
+        
+        ParentTile = newParentTile;
         GetChessboard().OnPieceCommittedMove(this, srcRow, srcColumn);
     }
 
