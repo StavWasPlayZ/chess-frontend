@@ -166,9 +166,9 @@ public class Chessboard : Grid
             else if (MirrorCheck(column, 2))
                 pieceType = ChessPiece.Type.Bishop;
             else if (column == 3)
-                pieceType = ChessPiece.Type.King;
-            else if (column == 4)
                 pieceType = ChessPiece.Type.Queen;
+            else if (column == 4)
+                pieceType = ChessPiece.Type.King;
             else
                 throw new InvalidOperationException("Invalid piece type");
         }
