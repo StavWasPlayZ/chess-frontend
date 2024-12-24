@@ -18,7 +18,7 @@ public interface INamedPipe
     async Task WaitForMsgAsync(TimeSpan? timeout = null) =>
         await RunWTimeout(Task.Run(WaitForMsg), timeout);
 
-    private async Task RunWTimeout(Task task, TimeSpan? timeout = null)
+    private static async Task RunWTimeout(Task task, TimeSpan? timeout = null)
     {
         var delayTask = Task.Delay(timeout ?? DefaultTimeout);
         var completed = await Task.WhenAny(
