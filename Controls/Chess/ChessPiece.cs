@@ -1,7 +1,9 @@
 using System;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using chess_frontend.Controls.Chess.Comm;
 using chess_frontend.Util;
 using chess_frontend.Views;
 
@@ -85,7 +87,7 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         dest /= GetChessboard().Size;
         dest *= Chessboard.ChessboardSize;
         
-        TryMoveTo(dest.AsChessPoint());
+        _ = TryMoveTo(dest.AsChessPoint());
     }
     
     private void PositionToPointer(PointerEventArgs e)
@@ -98,9 +100,14 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
     }
 
 
-    protected void TryMoveTo(ChessPoint destination)
+    protected async Task TryMoveTo(ChessPoint destination)
     {
-        if (!ValidateMove(destination))
+        // Lock board while waiting for response
+        GetChessboard().IsLocked = true;
+        var mayMove = await ValidateMove(destination);
+        GetChessboard().IsLocked = false;
+        
+        if (!mayMove)
         {
             ParentTile.ContainedChessPiece = this;
             return;
@@ -125,7 +132,7 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         GetChessboard().OnPieceCommittedMove(this, srcPos);
     }
 
-    protected bool ValidateMove(ChessPoint destination)
+    protected async Task<bool> ValidateMove(ChessPoint destination)
     {
         // While the backend does check for out-of-bounds behaviour,
         // we won't actually be able to determine where it will be on the board.
@@ -139,11 +146,35 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
         var destCN = destination.AsChessNotation;
         MainWindow.Instance!.LogToPanel($"Committing move: {srcCN + destCN}", LogType.Info);
         
-        //TODO backend call
+        await MainWindow.Pipe.SendMsgAsync(srcCN + destCN + (int)PlayerType);
+        var response = await MainWindow.Pipe.WaitForMsgAsync();
 
-        var statusCode = 0;
-        // TODO: Log out different stuff.
-        MainWindow.Instance.LogToPanel($"Backend returned OK ({statusCode})", LogType.Success);
+        if (!int.TryParse(response, out var statusCode))
+        {
+            MainWindow.Instance.LogToPanel($"Backend returned failure (literal: {response})", LogType.Error);
+            return false;
+        }
+
+        if (statusCode < 0 || statusCode > Enum.GetValues(typeof(MoveResult)).Length - 1)
+        {
+            MainWindow.Instance.LogToPanel($"Backend returned invalid result range ({statusCode})", LogType.Error);
+            return false;
+        }
+        
+        var moveResult = (MoveResult)statusCode;
+        if (!moveResult.IsLegalMove())
+        {
+            MainWindow.Instance.LogToPanel(
+                $"Backend returned failure: {moveResult.Description()} ({statusCode})",
+                LogType.Error
+            );
+            return false;
+        }
+
+        MainWindow.Instance.LogToPanel(
+            $"Backend returned OK: {moveResult.Description()} ({statusCode})",
+            LogType.Success
+        );
         return true;
     }
 
