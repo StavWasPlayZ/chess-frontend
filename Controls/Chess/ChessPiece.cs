@@ -41,6 +41,9 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
 
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
+        if (GetChessboard().IsLocked)
+            return;
+        
         // While this should really be a thing,
         // one of the backend checks is this.
         // So we shan't. I guess.

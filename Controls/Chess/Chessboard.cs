@@ -2,6 +2,7 @@ using System;
 using Avalonia.Controls;
 using Avalonia.VisualTree;
 using chess_frontend.Util;
+using chess_frontend.Views;
 
 namespace chess_frontend.Controls.Chess;
 
@@ -33,18 +34,20 @@ public class Chessboard : Grid
     
     public double TileSize { get; private set; }
 
+    // We lock because we might not yet be connected to anything
+    public bool IsLocked { get; private set; }
+
     
-    public Chessboard(Canvas overlayCanvas)
+    public Chessboard(Canvas overlayCanvas) : this()
     {
         OverlayCanvas = overlayCanvas;
-        AttachedToVisualTree += (_, _) => InitializeChessboard();
     }
 
     /// Constructs a Chessboard with no overlay canvas.
     /// <p><b>This canvas MUST later be initialized.</b></p>
     public Chessboard()
     {
-        AttachedToVisualTree += (_, _) => InitializeChessboard();
+        AttachedToVisualTree += (_, _) => SetupChessboard();
     }
 
     
@@ -71,10 +74,15 @@ public class Chessboard : Grid
         // Apply next turn
         PlayerTurn = 1 - PlayerTurn;
     }
+
+    public void OnBackendConnected()
+    {
+        IsLocked = false;
+    }
     
     
 
-    private void InitializeChessboard()
+    private void SetupChessboard()
     {
         TileSize = Size / ChessboardSize;
         
@@ -105,6 +113,9 @@ public class Chessboard : Grid
                 Children.Add(tile);
             }
         }
+
+        MainWindow.Instance!.LogToPanel("Waiting for backend connection...", LogType.Info);
+        MainWindow.Instance .LogToPanel("Press \"Connect to Backend\" to begin.", LogType.Info);
     }
 
     private void UpdateChessboardSize()

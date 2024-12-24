@@ -1,13 +1,16 @@
 using System;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
+using chess_frontend.Util.Comm;
 
 namespace chess_frontend.Views;
 
 public partial class MainWindow : Window
 {
     public static MainWindow? Instance { get; private set; }
+    public static readonly INamedPipe Pipe = new NamedPipeLinuxImpl();
     
     public MainWindow()
     {
@@ -17,17 +20,36 @@ public partial class MainWindow : Window
         MainChessboard.OverlayCanvas = OverlayCanvas;
         MainChessboard.AttachedToVisualTree += (_, _) => MainChessboard.PopulateBoard();
         
+        ConnectBackendBtn.Click += async (_, _) => await OnConnectBackendBtnClicked();
+        
         SizeChanged += OnSizeChanged;
+        Closing += OnClosing;
+    }
 
-        // if (!Design.IsDesignMode)
-        // {
-        //     var pipe = new NamedPipeLinuxImpl();
-        //     if (pipe.Exists)
-        //     {
-        //         // Console.WriteLine("Got: " + pipe.WaitForMsg());
-        //         _ = pipe.SendMsg("yes");
-        //     }
-        // }
+    private void OnClosing(object? sender, WindowClosingEventArgs e)
+    {
+        _ = Pipe.SendMsgAsync("ext");
+    }
+
+    private async Task OnConnectBackendBtnClicked()
+    {
+        if (!Pipe.Exists)
+        {
+            LogToPanel("Backend pipe not found! Start the backend and try again.", LogType.Error);
+            return;
+        }
+        
+        LogToPanel("Backend found. Starting session...", LogType.Info);
+        await Pipe.SendMsgAsync("rdy");
+
+        if (await Pipe.WaitForMsgAsync() != "rdy")
+        {
+            LogToPanel("Frontend connection failed: Unexpected message received", LogType.Error);
+            return;
+        }
+        
+        LogToPanel("Successfully connected to backend", LogType.Success);
+        MainChessboard.OnBackendConnected();
     }
 
     private void OnSizeChanged(object? sender, SizeChangedEventArgs e)

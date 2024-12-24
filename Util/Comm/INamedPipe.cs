@@ -12,22 +12,38 @@ public interface INamedPipe
     string WaitForMsg();
     void SendMsg(string message);
     
-    async Task SendMsgAsync(string message, TimeSpan? timeout = null) =>
+    
+    // Async stuffies
+    // (Timeout implementations)
+    
+    public async Task SendMsgAsync(string message, TimeSpan? timeout = null) =>
         await RunWTimeout(Task.Run(() => SendMsg(message)), timeout);
     
-    async Task WaitForMsgAsync(TimeSpan? timeout = null) =>
+    public async Task<string> WaitForMsgAsync(TimeSpan? timeout = null) =>
         await RunWTimeout(Task.Run(WaitForMsg), timeout);
+    
 
-    private static async Task RunWTimeout(Task task, TimeSpan? timeout = null)
+    private static async Task<T> RunWTimeout<T>(Task<T> task, TimeSpan? timeout = null)
     {
         var delayTask = Task.Delay(timeout ?? DefaultTimeout);
-        var completed = await Task.WhenAny(
-            task,
-            delayTask
-        );
+        var completed = await Task.WhenAny(task, delayTask);
 
         if (completed == delayTask)
         {
+            //TODO: Log in log viewer and reset "backend connected" state
+            throw new TimeoutException("Timed out waiting for a message");
+        }
+        
+        return task.Result;
+    }
+    private static async Task RunWTimeout(Task task, TimeSpan? timeout = null)
+    {
+        var delayTask = Task.Delay(timeout ?? DefaultTimeout);
+        var completed = await Task.WhenAny(task, delayTask);
+
+        if (completed == delayTask)
+        {
+            //TODO: Log in log viewer and reset "backend connected" state
             throw new TimeoutException("Timed out waiting for a message");
         }
     }
