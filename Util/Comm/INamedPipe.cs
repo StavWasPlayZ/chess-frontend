@@ -22,29 +22,31 @@ public interface INamedPipe
     public async Task<string> WaitForMsgAsync(TimeSpan? timeout = null) =>
         await RunWTimeout(Task.Run(WaitForMsg), timeout);
     
-
+    // Disable timeouts for debug stuff
     private static async Task<T> RunWTimeout<T>(Task<T> task, TimeSpan? timeout = null)
     {
-        var delayTask = Task.Delay(timeout ?? DefaultTimeout);
-        var completed = await Task.WhenAny(task, delayTask);
-
-        if (completed == delayTask)
-        {
-            //TODO: Log in log viewer and reset "backend connected" state
-            throw new TimeoutException("Timed out waiting for a message");
-        }
-        
-        return task.Result;
+        // var delayTask = Task.Delay(timeout ?? DefaultTimeout);
+        // var completed = await Task.WhenAny(task, delayTask);
+        //
+        // if (completed == delayTask)
+        // {
+        //     //TODO: Log in log viewer and reset "backend connected" state
+        //     throw new TimeoutException("Timed out waiting for a message");
+        // }
+        //
+        // return task.Result;
+        return await task;
     }
     private static async Task RunWTimeout(Task task, TimeSpan? timeout = null)
     {
-        var delayTask = Task.Delay(timeout ?? DefaultTimeout);
-        var completed = await Task.WhenAny(task, delayTask);
-
-        if (completed == delayTask)
-        {
-            //TODO: Log in log viewer and reset "backend connected" state
-            throw new TimeoutException("Timed out waiting for a message");
-        }
+        // var delayTask = Task.Delay(timeout ?? DefaultTimeout);
+        // var completed = await Task.WhenAny(task, delayTask);
+        //
+        // if (completed == delayTask)
+        // {
+        //     //TODO: Log in log viewer and reset "backend connected" state
+        //     throw new TimeoutException("Timed out waiting for a message");
+        // }
+        await task;
     }
 }
