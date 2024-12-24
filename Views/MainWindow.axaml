@@ -24,8 +24,7 @@
         <Grid
             ColumnDefinitions="Auto,*">
         
-            <Panel
-                Grid.Column="0">
+            <Panel Grid.Column="0">
                 
                 <chess:Chessboard
                     x:Name="MainChessboard"
@@ -39,8 +38,7 @@
             </Panel>
         
             <!--Right Panel-->
-            <Panel
-                Grid.Column="1"
+            <Panel Grid.Column="1"
                 Background="#262522">
                 
                 <Grid
