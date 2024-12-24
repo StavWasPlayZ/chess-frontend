@@ -7,7 +7,6 @@ namespace chess_frontend.Views;
 
 public partial class MainWindow : Window
 {
-    // public readonly Canvas OverlayCanvas;
     public static MainWindow? Instance { get; private set; }
     
     public MainWindow()
@@ -19,6 +18,16 @@ public partial class MainWindow : Window
         MainChessboard.AttachedToVisualTree += (_, _) => MainChessboard.PopulateBoard();
         
         SizeChanged += OnSizeChanged;
+
+        // if (!Design.IsDesignMode)
+        // {
+        //     var pipe = new NamedPipeLinuxImpl();
+        //     if (pipe.Exists)
+        //     {
+        //         // Console.WriteLine("Got: " + pipe.WaitForMsg());
+        //         _ = pipe.SendMsg("yes");
+        //     }
+        // }
     }
 
     private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
