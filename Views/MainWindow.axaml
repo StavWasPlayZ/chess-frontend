@@ -43,25 +43,26 @@
                 Grid.Column="1"
                 Background="#262522">
                 
-                <StackPanel
+                <Grid
+                    RowDefinitions="Auto, *, Auto"
                     Margin="30 0">
                     
-                    <!--Height has to be set here for scroller to work.-->
-                    <TextBlock
-                        x:Name="RightPanelTitle"
-                        Text="LOG VIEWER"
-                        FontWeight="Black"
-                        FontSize="27"
-                        Foreground="White"
-                        
-                        HorizontalAlignment="Center"
-                        Margin="0 30 0 0"
-                    />
-                    <Separator
-                        Background="White"
-                        Margin="0 10 0 0" />
+                    <StackPanel Grid.Row="0">
+                        <TextBlock
+                            Text="LOG VIEWER"
+                            FontWeight="Black"
+                            FontSize="27"
+                            Foreground="White"
+                            
+                            HorizontalAlignment="Center"
+                            Margin="0 30 0 0"
+                        />
+                        <Separator
+                            Background="White"
+                            Margin="0 10 0 0" />
+                    </StackPanel>
 
-                    <ScrollViewer
+                    <ScrollViewer Grid.Row="1"
                         x:Name="LogScroller"
                         HorizontalAlignment="Stretch">
                 
@@ -71,26 +72,27 @@
 
                     </ScrollViewer>
                     
-                    
-                    <Button
-                        x:Name="ConnectBackendBtn"
-                        HorizontalAlignment="Center"
-                        
-                        Foreground="White"
-                        BorderBrush="White"
-                        BorderThickness="2"
-                        
-                        Content="Connect to Backend">
+                    <Panel Grid.Row="2">
+                        <Button
+                            x:Name="ConnectBackendBtn"
+                            HorizontalAlignment="Center"
+                            
+                            Foreground="White"
+                            BorderBrush="White"
+                            BorderThickness="2"
+                            
+                            Content="Connect to Backend">
 
-                        <Button.Styles>
-                            <Style Selector="Button:pointerover /template/ ContentPresenter">
-                                <Setter Property="Background" Value="White" />
-                                <Setter Property="Foreground" Value="Black" />
-                            </Style>
-                        </Button.Styles>
-                        
-                    </Button>
-                </StackPanel>
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                </Style>
+                            </Button.Styles>
+                            
+                        </Button>
+                    </Panel>
+                </Grid>
             </Panel>
         </Grid>
         
