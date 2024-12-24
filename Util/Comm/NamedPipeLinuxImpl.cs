@@ -1,9 +1,8 @@
 using System.IO;
-using System.Threading.Tasks;
 
 namespace chess_frontend.Util.Comm;
 
-public class NamedPipeLinuxImpl(string path = "/tmp/cstavchess")
+public class NamedPipeLinuxImpl(string path = "/tmp/cstavchess") : INamedPipe
 {
     private const int MaxMsgSize = 6;
 
@@ -16,13 +15,10 @@ public class NamedPipeLinuxImpl(string path = "/tmp/cstavchess")
         return streamReader.ReadLine()!;
     }
 
-    public async Task SendMsg(string message)
+    public void SendMsg(string message)
     {
-        await Task.Run(() =>
-        {
-            using var fileStream = new FileStream(path, FileMode.Open, FileAccess.Write, FileShare.Read, MaxMsgSize);
-            using var streamWriter = new StreamWriter(fileStream);
-            streamWriter.Write(message);
-        });
+        using var fileStream = new FileStream(path, FileMode.Open, FileAccess.Write, FileShare.Read, MaxMsgSize);
+        using var streamWriter = new StreamWriter(fileStream);
+        streamWriter.Write(message);
     }
 }
