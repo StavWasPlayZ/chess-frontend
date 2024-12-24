@@ -75,9 +75,13 @@
                             x:Name="ConnectBackendBtn"
                             HorizontalAlignment="Center"
                             
+                            Background="Transparent"
                             Foreground="White"
                             BorderBrush="White"
                             BorderThickness="2"
+                            
+                            Padding="20 7"
+                            Margin="0 20"
                             
                             Content="Connect to Backend">
 
