@@ -38,7 +38,11 @@ public partial class MainWindow : Window
             
             // Height has to be set for the scroller to work.
             // 50 is around the size of the text.
-            LogScroller.Height = Height - (RightPanelTitle.Bounds.Height + 2 * RightPanelTitle.Margin.Top);
+            LogScroller.Height = Height - (
+                RightPanelTitle.Bounds.Height
+                + ConnectBackendBtn.Bounds.Height
+                + 2 * RightPanelTitle.Margin.Top
+            );
         }
     }
 

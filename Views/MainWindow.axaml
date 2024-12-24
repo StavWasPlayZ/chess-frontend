@@ -38,6 +38,7 @@
 
             </Panel>
         
+            <!--Right Panel-->
             <Panel
                 Grid.Column="1"
                 Background="#262522">
@@ -69,6 +70,26 @@
                             Margin="0 10" />
 
                     </ScrollViewer>
+                    
+                    
+                    <Button
+                        x:Name="ConnectBackendBtn"
+                        HorizontalAlignment="Center"
+                        
+                        Foreground="White"
+                        BorderBrush="White"
+                        BorderThickness="2"
+                        
+                        Content="Connect to Backend">
+
+                        <Button.Styles>
+                            <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </Button.Styles>
+                        
+                    </Button>
                 </StackPanel>
             </Panel>
         </Grid>
