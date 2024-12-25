@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace chess_frontend.Util.Comm;
 
-public interface INamedPipe
+public interface INamedPipe : IDisposable, IAsyncDisposable
 {
     private static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(5);
     
@@ -11,6 +11,9 @@ public interface INamedPipe
     
     string WaitForMsg();
     void SendMsg(string message);
+
+    void Close() {}
+    void Open() {}
     
     
     // Async stuffies
@@ -21,6 +24,21 @@ public interface INamedPipe
     
     public async Task<string> WaitForMsgAsync(TimeSpan? timeout = null) =>
         await RunWTimeout(Task.Run(WaitForMsg), timeout);
+    
+    public async Task OpenAsync() => await RunWTimeout(Task.Run(Open));
+    public async Task CloseAsync() => await RunWTimeout(Task.Run(Close));
+    
+    
+    // Disposable
+    void IDisposable.Dispose()
+    {
+        Close();
+    }
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        await CloseAsync();
+    }
+    
     
     // Disable timeouts for debug stuff
     private static async Task<T> RunWTimeout<T>(Task<T> task, TimeSpan? timeout = null)
