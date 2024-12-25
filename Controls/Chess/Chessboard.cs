@@ -35,7 +35,7 @@ public class Chessboard : Grid
     public double TileSize { get; private set; }
 
     // We lock because we might not yet be connected to anything
-    public bool IsLocked { get; set; }
+    public bool IsLocked { get; set; } = true;
 
     
     public Chessboard(Canvas overlayCanvas) : this()
