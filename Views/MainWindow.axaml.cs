@@ -10,7 +10,7 @@ namespace chess_frontend.Views;
 public partial class MainWindow : Window
 {
     public static MainWindow? Instance { get; private set; }
-    public static readonly INamedPipe Pipe = new NamedPipeLinuxImpl();
+    public static readonly INamedPipe Pipe = INamedPipe.Create();
     
     public MainWindow()
     {
@@ -26,21 +26,25 @@ public partial class MainWindow : Window
         Closing += OnClosing;
     }
 
-    private void OnClosing(object? sender, WindowClosingEventArgs e)
+    private static void OnClosing(object? sender, WindowClosingEventArgs e)
     {
-        _ = Pipe.SendMsgAsync("ext");
+        Pipe.DisposeAsync().AsTask().Wait();
     }
 
     private async Task OnConnectBackendBtnClicked()
     {
-        if (!Pipe.Exists)
+        LogToPanel("Attempting to fetch backend pipe...", LogType.Info);
+        
+        if (!await Pipe.MayConnect())
         {
-            LogToPanel("Backend pipe not found! Start the backend and try again.", LogType.Error);
+            Instance!.LogToPanel(
+                "Backend pipe not found! Start the backend and try again.",
+                LogType.Error
+            );
             return;
         }
         
         LogToPanel("Backend found. Starting session...", LogType.Info);
-        await Pipe.SendMsgAsync("rdy");
 
         if (await Pipe.WaitForMsgAsync() != "rdy")
         {
@@ -51,6 +55,7 @@ public partial class MainWindow : Window
         LogToPanel("Successfully connected to backend", LogType.Success);
         MainChessboard.OnBackendConnected();
     }
+    
 
     private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {

@@ -1,4 +1,5 @@
 using System.IO;
+using System.Threading.Tasks;
 
 namespace chess_frontend.Util.Comm;
 
@@ -7,6 +8,16 @@ public class NamedPipeLinuxImpl(string path = "/tmp/cstavchess") : INamedPipe
     private const int MaxMsgSize = 6;
 
     public bool Exists => File.Exists(path);
+    
+    public async Task<bool> MayConnect()
+    {
+        if (!Exists)
+            return false;
+        
+        await ((INamedPipe)this).SendReadyAsync();
+        return true;
+    }
+    
     
     public string WaitForMsg()
     {
