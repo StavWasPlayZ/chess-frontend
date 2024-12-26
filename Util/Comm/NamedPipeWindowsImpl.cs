@@ -50,9 +50,8 @@ public class NamedPipeWindowsImpl : INamedPipe
         _pipe.Dispose();
         _pipe = null;
         
-        _reader?.Dispose();
+        // Should already dispose of reader & writer.
         _reader = null;
-        _writer?.Dispose();
         _writer = null;
     }
     
