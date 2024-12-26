@@ -9,7 +9,7 @@ public class NamedPipeLinuxImpl(string path = "/tmp/cstavchess") : INamedPipe
 
     public bool Exists => File.Exists(path);
     
-    public async Task<bool> MayConnect()
+    public async Task<bool> OpenAndHandshake()
     {
         if (!Exists)
             return false;

@@ -7,7 +7,7 @@ namespace chess_frontend.Util.Comm;
 public interface INamedPipe : IDisposable, IAsyncDisposable
 {
     public static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(1);
-    private const string
+    public const string
         ReadyCommand = "rdy",
         ExitCommand = "ext"
     ; 
@@ -26,11 +26,11 @@ public interface INamedPipe : IDisposable, IAsyncDisposable
     }
 
     /// <summary>
-    /// Performs a platform-specific check on whether
-    /// the pipe may be opened. If so - it will.
+    /// Opens the pipe and, if succeeds -
+    /// sends a handshake command.
     /// </summary>
     /// <returns>Whether the pipe may open</returns>
-    public Task<bool> MayConnect();
+    public Task<bool> OpenAndHandshake();
     
     
     bool Exists { get; }

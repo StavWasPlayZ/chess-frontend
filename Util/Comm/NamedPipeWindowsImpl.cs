@@ -10,7 +10,7 @@ public class NamedPipeWindowsImpl : INamedPipe
     const string PipeName = "cstavchess";
     private NamedPipeClientStream? _pipe;
 
-    public async Task<bool> MayConnect()
+    public async Task<bool> OpenAndHandshake()
     {
         INamedPipe self = this;
         
@@ -46,12 +46,12 @@ public class NamedPipeWindowsImpl : INamedPipe
     
     public string WaitForMsg()
     {
-        using var streamReader = new StreamReader(_pipe!);
+        var streamReader = new StreamReader(_pipe!);
         return streamReader.ReadLine()!;
     }
     public void SendMsg(string message)
     {
-        using var streamWriter = new StreamWriter(_pipe!);
+        var streamWriter = new StreamWriter(_pipe!) { AutoFlush = true };
         streamWriter.Write(message);
     }
 }

@@ -35,7 +35,7 @@ public partial class MainWindow : Window
     {
         LogToPanel("Attempting to fetch backend pipe...", LogType.Info);
         
-        if (!await Pipe.MayConnect())
+        if (!await Pipe.OpenAndHandshake())
         {
             Instance!.LogToPanel(
                 "Backend pipe not found! Start the backend and try again.",
@@ -46,7 +46,7 @@ public partial class MainWindow : Window
         
         LogToPanel("Backend found. Starting session...", LogType.Info);
 
-        if (await Pipe.WaitForMsgAsync() != "rdy")
+        if (await Pipe.WaitForMsgAsync() != INamedPipe.ReadyCommand)
         {
             LogToPanel("Frontend connection failed: Unexpected message received", LogType.Error);
             return;
