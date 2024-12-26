@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
+using chess_frontend.Controls.Chess.Piece;
 using chess_frontend.Util;
 
 namespace chess_frontend.Controls.Chess;

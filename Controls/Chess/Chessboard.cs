@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.VisualTree;
+using chess_frontend.Controls.Chess.Piece;
 using chess_frontend.Util;
 using chess_frontend.Views;
 
@@ -188,10 +189,10 @@ public class Chessboard : Grid
             pieceType = ChessPiece.Type.Pawn;
         }
         
-        _tiles[row, column].ContainedChessPiece = new ChessPiece(
+        _tiles[row, column].ContainedChessPiece = ChessPiece.Create(
+            pieceType,
             this,
             _tiles[row, column],
-            pieceType,
             (row < ChessboardSize / 2) ? PlayerType.Black : PlayerType.White
         );
     }

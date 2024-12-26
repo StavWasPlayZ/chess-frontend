@@ -7,9 +7,9 @@ using chess_frontend.Controls.Chess.Comm;
 using chess_frontend.Util;
 using chess_frontend.Views;
 
-namespace chess_frontend.Controls.Chess;
+namespace chess_frontend.Controls.Chess.Piece;
 
-public class ChessPiece : Avalonia.Svg.Skia.Svg
+public abstract class ChessPiece : Avalonia.Svg.Skia.Svg
 {
     private const int PressScaleAddition = 5;
     private static readonly Uri BaseUri = new("avares://chess_frontend/");
@@ -21,14 +21,14 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
     public ChessboardTile ParentTile { get; set; }
 
     public ChessPoint Position => ParentTile.Position;
-    
-    public ChessPiece(Chessboard chessboard, ChessboardTile parentTile,
-            Type pieceType, PlayerType playerType) :
-        base(BaseUri)
+
+    protected ChessPiece(
+        Type pieceType,
+        Chessboard chessboard, ChessboardTile parentTile,
+        PlayerType playerType) : base(BaseUri)
     {
         _chessboard = chessboard;
         ParentTile = parentTile;
-        
         PieceType = pieceType;
         PlayerType = playerType;
         
@@ -38,6 +38,22 @@ public class ChessPiece : Avalonia.Svg.Skia.Svg
                + $"{playerType.ToString().ToLower()}_{pieceType.ToString().ToLower()}.svg";
         
         PointerPressed += OnPointerPressed;
+    }
+
+    public static ChessPiece Create(Type pieceType,
+        Chessboard chessboard, ChessboardTile parentTile,
+        PlayerType playerType)
+    {
+        return pieceType switch
+        {
+            Type.Pawn => new Pawn(chessboard, parentTile, playerType),
+            Type.Knight => new Knight(chessboard, parentTile, playerType),
+            Type.Queen => new Queen(chessboard, parentTile, playerType),
+            Type.Rook => new Rook(chessboard, parentTile, playerType),
+            Type.King => new King(chessboard, parentTile, playerType),
+            Type.Bishop => new Bishop(chessboard, parentTile, playerType),
+            _ => throw new ArgumentException($"Unknown piece type: {pieceType}")
+        };
     }
     
 
