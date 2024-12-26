@@ -77,12 +77,13 @@ public partial class MainWindow : Window
             _ => throw new ArgumentOutOfRangeException(nameof(logType), logType, null)
         };
 
-        LogOutputStack.Children.Add(new TextBlock
+        LogOutputStack.Children.Add(new SelectableTextBlock
         {
             Text = text,
             FontSize = 13,
             Foreground = brush,
-            Margin = new Thickness(0, 5)
+            Margin = new Thickness(0, 5),
+            TextWrapping = TextWrapping.Wrap
         });
 
         LogScroller.ScrollToEnd();
