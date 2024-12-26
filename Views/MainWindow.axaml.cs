@@ -28,7 +28,7 @@ public partial class MainWindow : Window
 
     private static void OnClosing(object? sender, WindowClosingEventArgs e)
     {
-        Pipe.DisposeAsync().AsTask().Wait();
+        Pipe.Dispose();
     }
 
     private async Task OnConnectBackendBtnClicked()
