@@ -9,6 +9,9 @@ public class NamedPipeWindowsImpl : INamedPipe
 {
     const string PipeName = "cstavchess";
     private NamedPipeClientStream? _pipe;
+    
+    private StreamReader? _reader;
+    private StreamWriter? _writer;
 
     public async Task<bool> OpenAndHandshake()
     {
@@ -32,8 +35,12 @@ public class NamedPipeWindowsImpl : INamedPipe
     public void Open()
     {
         Close();
+        
         _pipe = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
         _pipe.Connect();
+        
+        _reader = new StreamReader(_pipe!);
+        _writer = new StreamWriter(_pipe!) { AutoFlush = true };
     }
     public void Close()
     {
@@ -42,16 +49,19 @@ public class NamedPipeWindowsImpl : INamedPipe
         
         _pipe.Dispose();
         _pipe = null;
+        
+        _reader?.Dispose();
+        _reader = null;
+        _writer?.Dispose();
+        _writer = null;
     }
     
     public string WaitForMsg()
     {
-        var streamReader = new StreamReader(_pipe!);
-        return streamReader.ReadLine()!;
+        return _reader!.ReadLine()!;
     }
     public void SendMsg(string message)
     {
-        var streamWriter = new StreamWriter(_pipe!) { AutoFlush = true };
-        streamWriter.Write(message);
+        _writer!.Write(message);
     }
 }
