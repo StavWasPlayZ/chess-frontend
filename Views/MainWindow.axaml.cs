@@ -53,6 +53,7 @@ public partial class MainWindow : Window
         }
         
         LogToPanel("Successfully connected to backend", LogType.Success);
+        ConnectBackendBtn.IsVisible = false;
         MainChessboard.OnBackendConnected();
     }
     
