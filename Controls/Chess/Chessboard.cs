@@ -54,7 +54,7 @@ public class Chessboard : Grid
     
     private ChessboardTile? _srcOld, _destOld;
 
-    public void OnPieceCommittedMove(ChessPiece piece, ChessPoint source)
+    public void OnPieceMoved(ChessPiece piece, ChessPoint source)
     {        
         var srcTile = GetTileAt(source);
         var destTile = piece.ParentTile;
@@ -136,16 +136,7 @@ public class Chessboard : Grid
             RowDefinitions[i].Height = gSize;
         }
     }
-
-
-    /**
-     * Checks if the goal was reached from either the
-     * beginning or end of an array.
-     */
-    private static bool MirrorCheck(int index, int goal, int size = ChessboardSize)
-    {
-        return index == goal || index + 1 == size - goal;
-    }
+    
 
     public void PopulateBoard()
     {
@@ -169,13 +160,13 @@ public class Chessboard : Grid
     {
         ChessPiece.Type pieceType;
 
-        if (MirrorCheck(row, 0))
+        if (Utils.MirrorCheck(row, 0))
         {
-            if (MirrorCheck(column, 0))
+            if (Utils.MirrorCheck(column, 0))
                 pieceType = ChessPiece.Type.Rook;
-            else if (MirrorCheck(column, 1))
+            else if (Utils.MirrorCheck(column, 1))
                 pieceType = ChessPiece.Type.Knight;
-            else if (MirrorCheck(column, 2))
+            else if (Utils.MirrorCheck(column, 2))
                 pieceType = ChessPiece.Type.Bishop;
             else if (column == 3)
                 pieceType = ChessPiece.Type.Queen;

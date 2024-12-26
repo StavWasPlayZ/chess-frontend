@@ -145,8 +145,11 @@ public abstract class ChessPiece : Avalonia.Svg.Skia.Svg
         destTile.ContainedChessPiece = this;
         
         ParentTile = destTile;
-        GetChessboard().OnPieceCommittedMove(this, srcPos);
+        OnPieceMoved(srcPos);
+        GetChessboard().OnPieceMoved(this, srcPos);
     }
+
+    protected virtual void OnPieceMoved(ChessPoint srcPos) {}
 
     protected async Task<bool> ValidateMove(ChessPoint destination)
     {
