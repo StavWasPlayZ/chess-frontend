@@ -22,7 +22,8 @@ public class NamedPipeWindowsImpl : INamedPipe
         {
             return false;
         }
-        
+
+        await self.SendReadyAsync();
         return true;
     }
 
