@@ -22,13 +22,17 @@ public class PawnReplacementDialog : Grid
     
     public Chessboard GetChessboard() => Pawn.GetChessboard();
     
+    private readonly Border _containingBorder;
     public readonly Pawn Pawn;
-    
-    public PawnReplacementDialog(Pawn pawn)
+
+    private PawnReplacementDialog(Pawn pawn, Border containingBorder)
     {
         Pawn = pawn;
 
         Background = Brushes.White;
+        _containingBorder = containingBorder;
+        
+        containingBorder.Child = this;
         
         AttachedToVisualTree += OnAttachedToVisualTree;
     }
@@ -42,9 +46,6 @@ public class PawnReplacementDialog : Grid
     /// <returns></returns>
     public static void CreateAndPrompt(Pawn pawn)
     {
-        var dialog = new PawnReplacementDialog(pawn);
-        var board = pawn.GetChessboard();
-
         var border = new Border
         {
             BoxShadow = new BoxShadows(new BoxShadow
@@ -52,18 +53,40 @@ public class PawnReplacementDialog : Grid
                 Color = new Color(255/4, 0, 0, 0),
                 Blur = 7,
                 Spread = 7
-            }),
-            Child = dialog
+            })
         };
+        
+        var dialog = new PawnReplacementDialog(pawn, border);
+        var board = pawn.GetChessboard();
 
-        dialog.MoveToTile(border);
+        dialog.MoveToTile();
         
         board.OverlayCanvas.Children.Add(border);
         board.IsLocked = true;
         
         dialog.GetChessboard().SizeChanged += dialog.OnChessboardSizeChanged;
-        dialog.GetChessboard().SizeChanged += (_, _) => dialog.MoveToTile(border);
+
+        dialog.RegisterTileClickHandlers();
     }
+
+    private void RegisterTileClickHandlers()
+    {
+        foreach (var pieceTile in _pieceTiles)
+        {
+            pieceTile.PointerPressed += (_, _) => OnPieceTypeSelected(pieceTile.Piece.PieceType);
+        }
+    }
+
+    private void OnPieceTypeSelected(ChessPiece.Type type)
+    {
+        //TODO: handle it
+        
+        GetChessboard().OverlayCanvas.Children.Remove(_containingBorder);
+        GetChessboard().IsLocked = false;
+    }
+
+
+    // Chessboard size change handlers
     
     private void OnChessboardSizeChanged(object? sender, SizeChangedEventArgs e)
     {
@@ -73,15 +96,18 @@ public class PawnReplacementDialog : Grid
         {
             pieceTile.Width = pieceTile.Height = GetChessboard().TileSize;
         }
+        
+        MoveToTile();
     }
 
-    private void MoveToTile(Control toMove)
+    private void MoveToTile()
     {
         var newCoords = Pawn.ParentTile.TranslatePoint(new Point(0, 0), MainWindow.Instance!)!.Value;
         
-        Canvas.SetTop(toMove, newCoords.Y);
-        Canvas.SetLeft(toMove, newCoords.X);
+        Canvas.SetTop(_containingBorder, newCoords.Y);
+        Canvas.SetLeft(_containingBorder, newCoords.X);
     }
+    
     
 
     private void OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
@@ -106,9 +132,9 @@ public class PawnReplacementDialog : Grid
     /// </summary>
     private class PieceTile : Panel
     {
-        private static readonly SolidColorBrush BackgroundTint = new(new Color(10, 0, 0, 0));
+        private static readonly SolidColorBrush BackgroundTint = new(new Color(30, 0, 0, 0));
         
-        private readonly DummyChessPiece Piece;
+        public readonly DummyChessPiece Piece;
         public readonly int Row;
 
         public PieceTile(ChessPiece.Type pieceType, PlayerType playerType, int row, double size)
