@@ -35,6 +35,7 @@ public class PawnReplacementDialog : Grid
     /// <summary>
     /// Creates a new Pawn Replacement dialog, pushes it
     /// into its Overlay Canvas and locks the chessboard.
+    /// Wraps it in a Border for shadow elevation.
     /// </summary>
     /// <param name="pawn"></param>
     /// <returns></returns>
@@ -42,13 +43,25 @@ public class PawnReplacementDialog : Grid
     {
         var dialog = new PawnReplacementDialog(pawn);
         var board = pawn.GetChessboard();
+
+        var border = new Border
+        {
+            BoxShadow = new BoxShadows(new BoxShadow
+            {
+                Color = new Color(255/4, 0, 0, 0),
+                Blur = 7,
+                Spread = 7
+            }),
+            Child = dialog
+        };
+
+        dialog.MoveToTile(border);
         
-        dialog.MoveToTile();
-        
-        board.OverlayCanvas.Children.Add(dialog);
+        board.OverlayCanvas.Children.Add(border);
         board.IsLocked = true;
         
-        pawn.GetChessboard().SizeChanged += dialog.OnChessboardSizeChanged;
+        dialog.GetChessboard().SizeChanged += dialog.OnChessboardSizeChanged;
+        dialog.GetChessboard().SizeChanged += (_, _) => dialog.MoveToTile(border);
     }
     
     private void OnChessboardSizeChanged(object? sender, SizeChangedEventArgs e)
@@ -59,16 +72,14 @@ public class PawnReplacementDialog : Grid
         {
             piece.Width = piece.Height = GetChessboard().TileSize;
         }
-        
-        MoveToTile();
     }
 
-    private void MoveToTile()
+    private void MoveToTile(Control toMove)
     {
         var newCoords = Pawn.ParentTile.TranslatePoint(new Point(0, 0), MainWindow.Instance!)!.Value;
         
-        Canvas.SetTop(this, newCoords.Y);
-        Canvas.SetLeft(this, newCoords.X);
+        Canvas.SetTop(toMove, newCoords.Y);
+        Canvas.SetLeft(toMove, newCoords.X);
     }
     
 
