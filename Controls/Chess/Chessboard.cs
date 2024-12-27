@@ -13,7 +13,7 @@ public class Chessboard : Grid
     /// When DebugMode is true, ChessPiece.ValidateMove will
     /// always return true and the board is never locked.
     /// </summary>
-    public const bool DebugMode = true;
+    public const bool DebugMode = false;
     
     public const int ChessboardSize = 8;
 

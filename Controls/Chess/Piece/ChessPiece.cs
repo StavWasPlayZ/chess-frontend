@@ -130,9 +130,9 @@ public abstract class ChessPiece : DummyChessPiece
         // create a self-eating paradox.
         if (destTile.ContainedChessPiece != null && destTile != ParentTile)
         {
-            destTile.ContainedChessPiece.PointerPressed -= OnPointerPressed;
-            //TODO: And add OnPieceToDevour
-            // And Fetch new score for player
+            destTile.ContainedChessPiece.OnPieceRemoved();
+            //TODO: OnPieceDevoured
+            // And fetch player score (maybe)
         }
 
         ParentTile.ContainedChessPiece = null;
@@ -144,6 +144,11 @@ public abstract class ChessPiece : DummyChessPiece
     }
 
     protected virtual void OnPieceMoved(ChessPoint srcPos) {}
+
+    protected virtual void OnPieceRemoved()
+    {
+        PointerPressed -= OnPointerPressed;
+    }
 
     protected async Task<bool> ValidateMove(ChessPoint destination)
     {
@@ -164,35 +169,8 @@ public abstract class ChessPiece : DummyChessPiece
         MainWindow.Instance!.LogToPanel($"Committing move: {srcCN + destCN}", LogType.Info);
         
         await MainWindow.Pipe.SendMsgAsync(srcCN + destCN + (int)PlayerType);
-        var response = await MainWindow.Pipe.WaitForMsgAsync();
-
-        if (!int.TryParse(response, out var statusCode))
-        {
-            MainWindow.Instance.LogToPanel($"Backend returned failure (literal: {response})", LogType.Error);
-            return false;
-        }
-
-        if (statusCode < 0 || statusCode > Enum.GetValues(typeof(MoveResult)).Length - 1)
-        {
-            MainWindow.Instance.LogToPanel($"Backend returned invalid result range ({statusCode})", LogType.Error);
-            return false;
-        }
         
-        var moveResult = (MoveResult)statusCode;
-        if (!moveResult.IsLegalMove())
-        {
-            MainWindow.Instance.LogToPanel(
-                $"Backend returned failure: {moveResult.Description()} ({statusCode})",
-                LogType.Error
-            );
-            return false;
-        }
-
-        MainWindow.Instance.LogToPanel(
-            $"Backend returned OK: {moveResult.Description()} ({statusCode})",
-            LogType.Success
-        );
-        return true;
+        return (await Utils.FetchMoveResult())?.IsLegalMove() == true;
     }
 
 
