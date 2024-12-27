@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
 using chess_frontend.Controls.Chess.Piece;
 using chess_frontend.Util;
@@ -17,7 +18,7 @@ public class PawnReplacementDialog : Grid
         ChessPiece.Type.Knight
     ];
 
-    private DummyChessPiece[] _pieces = new DummyChessPiece[AcceptablePieces.Length];
+    private readonly PieceTile[] _pieceTiles = new PieceTile[AcceptablePieces.Length];
     
     public Chessboard GetChessboard() => Pawn.GetChessboard();
     
@@ -68,9 +69,9 @@ public class PawnReplacementDialog : Grid
     {
         this.ApplyGridDefinitions(AcceptablePieces.Length, 1, GetChessboard().TileSize);
         
-        foreach (var piece in _pieces)
+        foreach (var pieceTile in _pieceTiles)
         {
-            piece.Width = piece.Height = GetChessboard().TileSize;
+            pieceTile.Width = pieceTile.Height = GetChessboard().TileSize;
         }
     }
 
@@ -90,11 +91,52 @@ public class PawnReplacementDialog : Grid
         
         for (var i = 0; i < AcceptablePieces.Length; i++)
         {
-            var piece = new DummyChessPiece(AcceptablePieces[i], Pawn.PlayerType, size);
-            SetRow(piece, i);
-            Children.Add(piece);
+            var pieceTile = new PieceTile(AcceptablePieces[i], Pawn.PlayerType, i, size);
+            SetRow(pieceTile, i);
+            Children.Add(pieceTile);
             
-            _pieces[i] = piece;
+            _pieceTiles[i] = pieceTile;
+        }
+    }
+
+    
+    /// <summary>
+    /// A panel-tile specific to the Replacement dialog
+    /// that contains a DummyChessPiece child.
+    /// </summary>
+    private class PieceTile : Panel
+    {
+        private static readonly SolidColorBrush BackgroundTint = new(new Color(10, 0, 0, 0));
+        
+        private readonly DummyChessPiece Piece;
+        public readonly int Row;
+
+        public PieceTile(ChessPiece.Type pieceType, PlayerType playerType, int row, double size)
+        {
+            Piece = new DummyChessPiece(pieceType, playerType, size);
+            Row = row;
+
+            Width = Height = size;
+            
+            Children.Add(Piece);
+            SizeChanged += OnSizeChanged;
+            
+            PointerEntered += OnPointerEntered;
+            PointerExited += OnPointerExited;
+        }
+
+        private void OnPointerExited(object? sender, PointerEventArgs e)
+        {
+            Background = Brushes.Transparent;
+        }
+        private void OnPointerEntered(object? sender, PointerEventArgs e)
+        {
+            Background = BackgroundTint;
+        }
+
+        private void OnSizeChanged(object? o, SizeChangedEventArgs sizeChangedEventArgs)
+        {
+            Piece.Width = Piece.Height = Height;
         }
     }
 }
