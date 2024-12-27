@@ -86,21 +86,7 @@ public class Chessboard : Grid
     private void SetupChessboard()
     {
         TileSize = Size / ChessboardSize;
-        
-        // Apply row/column definitions
-        RowDefinitions = [];
-        ColumnDefinitions = [];
-
-        var gSize = new GridLength(TileSize);
-        
-        for (var i = 0; i < ChessboardSize; i++)
-        {
-            for (var j = 0; j < ChessboardSize; j++)
-            {
-                ColumnDefinitions.Add(new ColumnDefinition { Width = gSize });
-            }
-            RowDefinitions.Add(new RowDefinition { Height = gSize });
-        }
+        this.ApplyGridDefinitions(ChessboardSize, ChessboardSize, TileSize);
         
         // Add chess tiles
         for (var i = 0; i < ChessboardSize; i++)

@@ -9,14 +9,14 @@ using chess_frontend.Views;
 
 namespace chess_frontend.Controls.Chess.Piece;
 
-public abstract class ChessPiece : Avalonia.Svg.Skia.Svg
+/// <summary>
+/// A chess piece with player logic.
+/// </summary>
+public abstract class ChessPiece : DummyChessPiece
 {
     private const int PressScaleAddition = 5;
-    private static readonly Uri BaseUri = new("avares://chess_frontend/");
     
     private readonly Chessboard _chessboard;
-    public readonly Type PieceType;
-    public readonly PlayerType PlayerType;
     
     public ChessboardTile ParentTile { get; set; }
 
@@ -25,17 +25,10 @@ public abstract class ChessPiece : Avalonia.Svg.Skia.Svg
     protected ChessPiece(
         Type pieceType,
         Chessboard chessboard, ChessboardTile parentTile,
-        PlayerType playerType) : base(BaseUri)
+        PlayerType playerType) : base(pieceType, playerType, chessboard.TileSize)
     {
         _chessboard = chessboard;
         ParentTile = parentTile;
-        PieceType = pieceType;
-        PlayerType = playerType;
-        
-        Width = Height = _chessboard.TileSize;
-
-        Path = "/Assets/pieces/"
-               + $"{playerType.ToString().ToLower()}_{pieceType.ToString().ToLower()}.svg";
         
         PointerPressed += OnPointerPressed;
     }

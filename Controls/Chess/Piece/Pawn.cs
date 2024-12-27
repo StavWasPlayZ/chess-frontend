@@ -1,4 +1,3 @@
-using System;
 using chess_frontend.Util;
 
 namespace chess_frontend.Controls.Chess.Piece;
@@ -17,7 +16,7 @@ public class Pawn(
         
         if (Position.Y == dest)
         {
-            Console.WriteLine("end");
+            PawnReplacementDialog.CreateAndPrompt(this);
         }
     }
 }
