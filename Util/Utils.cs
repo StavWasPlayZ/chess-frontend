@@ -24,12 +24,12 @@ public static class Utils
 
         var gSize = new GridLength(size);
         
+        for (var j = 0; j < columns; j++)
+        {
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = gSize });
+        }
         for (var i = 0; i < rows; i++)
         {
-            for (var j = 0; j < columns; j++)
-            {
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = gSize });
-            }
             grid.RowDefinitions.Add(new RowDefinition { Height = gSize });
         }
     }
