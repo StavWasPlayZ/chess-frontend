@@ -53,7 +53,8 @@ public abstract class ChessPiece : DummyChessPiece
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (GetChessboard().IsLocked)
-            return;
+            if (!Chessboard.DebugMode)
+                return;
         
         // While this should really be a thing,
         // one of the backend checks is this.
@@ -146,6 +147,10 @@ public abstract class ChessPiece : DummyChessPiece
 
     protected async Task<bool> ValidateMove(ChessPoint destination)
     {
+        // Debug purposes
+        if (Chessboard.DebugMode)
+            return true;
+        
         // While the backend does check for out-of-bounds behaviour,
         // we won't actually be able to determine where it will be on the board.
         if (destination.IsOutOfBounds)

@@ -9,6 +9,12 @@ namespace chess_frontend.Controls.Chess;
 
 public class Chessboard : Grid
 {
+    /// <summary>
+    /// When DebugMode is true, ChessPiece.ValidateMove will
+    /// always return true and the board is never locked.
+    /// </summary>
+    public const bool DebugMode = true;
+    
     public const int ChessboardSize = 8;
 
     public PlayerType PlayerTurn { get; private set; } = PlayerType.White;
