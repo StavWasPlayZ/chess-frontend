@@ -20,6 +20,9 @@ public class PawnReplacementDialog : Grid
 
     private readonly PieceTile[] _pieceTiles = new PieceTile[AcceptablePieces.Length];
     
+    public delegate void OnPieceTypeSelectedHandler(ChessPiece.Type pieceType);
+    public event OnPieceTypeSelectedHandler? PieceTypeSelected;
+    
     public Chessboard GetChessboard() => Pawn.GetChessboard();
     
     private readonly Border _containingBorder;
@@ -44,7 +47,7 @@ public class PawnReplacementDialog : Grid
     /// </summary>
     /// <param name="pawn"></param>
     /// <returns></returns>
-    public static void CreateAndPrompt(Pawn pawn)
+    public static PawnReplacementDialog CreateAndPrompt(Pawn pawn)
     {
         var border = new Border
         {
@@ -65,8 +68,8 @@ public class PawnReplacementDialog : Grid
         board.IsLocked = true;
         
         dialog.GetChessboard().SizeChanged += dialog.OnChessboardSizeChanged;
-
-        dialog.RegisterTileClickHandlers();
+        
+        return dialog;
     }
 
     private void RegisterTileClickHandlers()
@@ -79,10 +82,10 @@ public class PawnReplacementDialog : Grid
 
     private void OnPieceTypeSelected(ChessPiece.Type type)
     {
-        //TODO: handle it
-        
         GetChessboard().OverlayCanvas.Children.Remove(_containingBorder);
         GetChessboard().IsLocked = false;
+        
+        PieceTypeSelected?.Invoke(type);
     }
 
 
@@ -123,6 +126,8 @@ public class PawnReplacementDialog : Grid
             
             _pieceTiles[i] = pieceTile;
         }
+        
+        RegisterTileClickHandlers();
     }
 
     

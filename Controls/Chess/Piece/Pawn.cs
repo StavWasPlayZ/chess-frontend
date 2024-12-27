@@ -1,3 +1,4 @@
+using System;
 using chess_frontend.Util;
 
 namespace chess_frontend.Controls.Chess.Piece;
@@ -16,7 +17,12 @@ public class Pawn(
         
         if (Position.Y == dest)
         {
-            PawnReplacementDialog.CreateAndPrompt(this);
+            PawnReplacementDialog.CreateAndPrompt(this).PieceTypeSelected += OnNewPieceTypeSelected;
         }
+    }
+
+    private void OnNewPieceTypeSelected(Type pieceType)
+    {
+        Console.WriteLine(pieceType.ToString());
     }
 }
