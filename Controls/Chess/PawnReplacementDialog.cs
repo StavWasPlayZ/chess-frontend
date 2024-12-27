@@ -83,6 +83,7 @@ public class PawnReplacementDialog : Grid
     private void OnPieceTypeSelected(ChessPiece.Type type)
     {
         GetChessboard().OverlayCanvas.Children.Remove(_containingBorder);
+        GetChessboard().SizeChanged -= OnChessboardSizeChanged;
         GetChessboard().IsLocked = false;
         
         PieceTypeSelected?.Invoke(type);
