@@ -108,8 +108,19 @@ public class PawnReplacementDialog : Grid
     {
         var newCoords = Pawn.ParentTile.TranslatePoint(new Point(0, 0), MainWindow.Instance!)!.Value;
         
-        Canvas.SetTop(_containingBorder, newCoords.Y);
+        // Black is below, and it will overflow down.
+        // Thus, push it up until the bottom piece is
+        // at the current tile.
+        if (Pawn.PlayerType == PlayerType.Black)
+        {
+            newCoords = new Point(
+                newCoords.X,
+                newCoords.Y - GetChessboard().TileSize * (_pieceTiles.Length - 1)
+            );
+        }
+        
         Canvas.SetLeft(_containingBorder, newCoords.X);
+        Canvas.SetTop(_containingBorder, newCoords.Y);
     }
     
     
