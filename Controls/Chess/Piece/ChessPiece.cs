@@ -134,7 +134,7 @@ public abstract class ChessPiece : DummyChessPiece
         // create a self-eating paradox.
         if (destTile.ContainedChessPiece != null && destTile != ParentTile)
         {
-            RemoveFromBoard();
+            destTile.ContainedChessPiece.RemoveFromBoard();
             //TODO: OnPieceDevoured
             // And fetch player score (maybe)
         }
