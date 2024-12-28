@@ -19,7 +19,8 @@ public enum MoveResult
     Checkmate,
     
     // Custom
-    EnPassant
+    EnPassant,
+    Castling
 }
 
 public static class MoveResultExtensions
@@ -29,7 +30,9 @@ public static class MoveResultExtensions
         MoveResult.LegalMove,
         MoveResult.Check,
         MoveResult.Checkmate,
-        MoveResult.EnPassant
+        
+        MoveResult.EnPassant,
+        MoveResult.Castling
     ];
         
     public static bool IsLegalMove(this MoveResult moveResult)
