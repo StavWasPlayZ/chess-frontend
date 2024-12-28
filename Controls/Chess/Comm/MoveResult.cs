@@ -16,7 +16,10 @@ public enum MoveResult
     IllegalMove,
     SamePlace,
 
-    Checkmate
+    Checkmate,
+    
+    // Custom
+    EnPassant
 }
 
 public static class MoveResultExtensions
@@ -25,7 +28,8 @@ public static class MoveResultExtensions
     [
         MoveResult.LegalMove,
         MoveResult.Check,
-        MoveResult.Checkmate
+        MoveResult.Checkmate,
+        MoveResult.EnPassant
     ];
         
     public static bool IsLegalMove(this MoveResult moveResult)
@@ -48,6 +52,8 @@ public static class MoveResultExtensions
             MoveResult.IllegalMove => "Illegal move",
             MoveResult.SamePlace => "Same place",
             MoveResult.Checkmate => "Checkmate",
+            
+            MoveResult.EnPassant => "En Passant",
             
             _ => throw new ArgumentOutOfRangeException(nameof(moveResult), moveResult, null)
         };

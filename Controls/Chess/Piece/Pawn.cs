@@ -11,9 +11,9 @@ public class Pawn(
     PlayerType playerType
 ) : ChessPiece(Type.Pawn, chessboard, parentTile, playerType)
 {
-    protected override void OnPieceMoved(ChessPoint srcPos)
+    protected override void OnPieceMoved(MoveResult moveResult, ChessPoint srcPos)
     {
-        base.OnPieceMoved(srcPos);
+        base.OnPieceMoved(moveResult, srcPos);
 
         var dest = PlayerType == PlayerType.White ? 0 : Chessboard.ChessboardSize - 1;
         
@@ -21,6 +21,16 @@ public class Pawn(
         {
             PawnReplacementDialog.CreateAndPrompt(this)
                 .PieceTypeSelected += async pieceType => await SwitchForPiece(pieceType);
+        }
+
+        if (moveResult == MoveResult.EnPassant)
+        {
+            // It must be the piece currently beneath us.
+            GetChessboard().GetTileAt(Position + (
+                PlayerType == PlayerType.White
+                    ? new ChessPoint(0, 1)
+                    : new ChessPoint(0, -1)
+            )).ContainedChessPiece!.RemoveFromBoard();
         }
     }
 
@@ -34,8 +44,8 @@ public class Pawn(
         if ((await Utils.FetchMoveResult())?.IsLegalMove() != true)
             return;
         
-        OnPieceRemoved();
-            
+        RemoveFromBoard();
+        
         ParentTile.ContainedChessPiece = Create(
             pieceType,
             GetChessboard(),

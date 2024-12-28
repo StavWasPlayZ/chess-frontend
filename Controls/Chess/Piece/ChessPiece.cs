@@ -18,6 +18,10 @@ public abstract class ChessPiece : DummyChessPiece
     
     private readonly Chessboard _chessboard;
     
+    /// <summary>
+    /// The tile containing this chess piece.
+    /// If null, then this piece is no longer on-board.
+    /// </summary>
     public ChessboardTile ParentTile { get; set; }
 
     public ChessPoint Position => ParentTile.Position;
@@ -114,10 +118,10 @@ public abstract class ChessPiece : DummyChessPiece
     {
         // Lock board while waiting for response
         GetChessboard().IsLocked = true;
-        var mayMove = await ValidateMove(destination);
+        var moveResult = await ValidateMove(destination);
         GetChessboard().IsLocked = false;
         
-        if (!mayMove)
+        if (moveResult?.IsLegalMove() != true)
         {
             ParentTile.ContainedChessPiece = this;
             return;
@@ -130,7 +134,7 @@ public abstract class ChessPiece : DummyChessPiece
         // create a self-eating paradox.
         if (destTile.ContainedChessPiece != null && destTile != ParentTile)
         {
-            destTile.ContainedChessPiece.OnPieceRemoved();
+            RemoveFromBoard();
             //TODO: OnPieceDevoured
             // And fetch player score (maybe)
         }
@@ -139,29 +143,34 @@ public abstract class ChessPiece : DummyChessPiece
         destTile.ContainedChessPiece = this;
         
         ParentTile = destTile;
-        OnPieceMoved(srcPos);
+        OnPieceMoved(moveResult.Value, srcPos);
         GetChessboard().OnPieceMoved(this, srcPos);
     }
 
-    protected virtual void OnPieceMoved(ChessPoint srcPos) {}
+    protected virtual void OnPieceMoved(MoveResult moveResult, ChessPoint srcPos) {}
 
-    protected virtual void OnPieceRemoved()
+    public void RemoveFromBoard()
     {
         PointerPressed -= OnPointerPressed;
+        ParentTile.ContainedChessPiece = null;
     }
 
-    protected async Task<bool> ValidateMove(ChessPoint destination)
+    /// <summary>
+    /// Checks the provided move against the backend.
+    /// </summary>
+    /// <returns>The backend's response</returns>
+    protected async Task<MoveResult?> ValidateMove(ChessPoint destination)
     {
         // Debug purposes
         if (Chessboard.DebugMode)
-            return true;
+            return MoveResult.LegalMove;
         
         // While the backend does check for out-of-bounds behaviour,
         // we won't actually be able to determine where it will be on the board.
         if (destination.IsOutOfBounds)
         {
             MainWindow.Instance!.LogToPanel("BAD MOVE: Destination out of bounds", LogType.Error);
-            return false;
+            return MoveResult.OutOfBounds;
         }
         
         var srcCN = Position.AsChessNotation;
@@ -170,7 +179,7 @@ public abstract class ChessPiece : DummyChessPiece
         
         await MainWindow.Pipe.SendMsgAsync(srcCN + destCN + (int)PlayerType);
         
-        return (await Utils.FetchMoveResult())?.IsLegalMove() == true;
+        return await Utils.FetchMoveResult();
     }
 
 
