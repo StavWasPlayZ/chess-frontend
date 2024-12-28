@@ -44,9 +44,10 @@ public class Pawn(
         if ((await Utils.FetchMoveResult())?.IsLegalMove() != true)
             return;
         
+        var oldParentTile = ParentTile;
         RemoveFromBoard();
         
-        ParentTile.ContainedChessPiece = Create(
+        oldParentTile.ContainedChessPiece = Create(
             pieceType,
             GetChessboard(),
             ParentTile,
