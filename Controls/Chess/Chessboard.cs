@@ -36,7 +36,7 @@ public class Chessboard : Grid
     
     public ChessboardTile GetTileAt(ChessPoint point) =>
         _tiles[point.Y, point.X];
-    public void SetTileAt(ChessPoint point, ChessboardTile tile) =>
+    private void SetTileAt(ChessPoint point, ChessboardTile tile) =>
         _tiles[point.Y, point.X] = tile;
     
     public double TileSize { get; private set; }
