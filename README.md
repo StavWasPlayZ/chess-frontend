@@ -16,6 +16,7 @@ Their communication is achieved via **named pipes** in Windows and a **FIFO file
 ## In This Project
 
 - The fundamental implementations and rules of a Chess game
+  - Pawn-switching
   - En Passant
 - Cross-platform support for Windows and Unix-based systems
 - Properly resizable GUI
