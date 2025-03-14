@@ -1,14 +1,14 @@
 # Chess—Frontend
 
-![Banner](./public/assets/banner.png)
+A [Chess.com](https://chess.com)-like GUI powered by the Avalonia UI framework, serving as a frontend to the [Chess Backend](https://github.com/StavWasPlayZ/chess-backend).
 
-A [Chess.com](https://chess.com)-like GUI frontend powered by the Avalonia UI framework.
+![Banner](./public/assets/banner.png)
 
 Submitted as part of the Magshimim National Cyber Program year 2, sem. 1 project.
 
 ## "Frontend"?
 
-This program is made to communicate with the [Chess Backend]() - a move validator "server".
+This program is made to communicate with the [Chess Backend](https://github.com/StavWasPlayZ/chess-backend) - a move validator "server".
 
 Their communication is achieved via **named pipes** in Windows and a **FIFO file** in Linux/Unix—depending on the active operating system at runtime.
 
